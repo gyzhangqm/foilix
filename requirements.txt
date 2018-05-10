@@ -1,0 +1,14 @@
+numpy
+scipy
+matplotlib
+# PySide
+pyqtgraph
+wx
+atom
+
+pytest
+corelib
+libra
+
+# used in examples
+hydro

@@ -1,0 +1,18 @@
+#ignore compiled python files
+*.pyc
+*.pyo
+*.pyw
+
+# ignore log files
+*.log
+
+# ignore generated parsec files
+parsec_*.dat
+
+# ignore PyCharm specific files
+/.idea
+
+__pycache__/
+/examples/foil_section_analysis/temp_airfoil_14.dat
+
+/.cache/
