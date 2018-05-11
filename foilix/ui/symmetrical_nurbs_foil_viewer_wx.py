@@ -12,6 +12,9 @@ import wx
 from wx.lib.agw.floatspin import FloatSpin
 import wx.lib.agw.aui
 
+import matplotlib
+matplotlib.use('wx')
+
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar
 import matplotlib.pyplot as plt
@@ -150,7 +153,7 @@ class GraphPanel(wx.Panel):
         super(GraphPanel, self).__init__(parent, wx.ID_ANY)
 
         self.model = model
-
+        #
         self.figure = plt.figure(facecolor='white')
         sizer = wx.BoxSizer(wx.VERTICAL)
         self.canvas = FigureCanvas(self, -1, self.figure)
@@ -226,17 +229,17 @@ class GraphPanel(wx.Panel):
         plt.subplots_adjust(left=0.05, right=0.95, top=0.99, bottom=0.01)
 
         # can be hardcoded since x values of foil sections are bound to 0 -> 1
-        ax.set_xlim([-.1, 1.1])
+        ax.set_xlim(left=-.1, right=1.1)
 
         # can be hardcoded since y values of foils will never
         # exceed these bounds
-        ax.set_ylim([-.25, .25])
+        ax.set_ylim(bottom=-.25, top=.25)
 
         ax.set_yticks([-0.1, -0.08, -0.06, -0.04, -0.02, 0.,
                        0.02, 0.04, 0.06, 0.08, 0.1])
         ax.set_frame_on(False)  # outer frame
         #
-        for x, y, color, name in reversed(zip(xs, ys, colors, names)):
+        for x, y, color, name in reversed(list(zip(xs, ys, colors, names))):
             ax.plot(x, y, marker='+', color=color, label=name)
 
         ax.grid()
@@ -369,7 +372,7 @@ class NurbsFoilViewerFrame(wx.Frame):
 
         self.controls_panel = NurbsControlsPanel(self, self.model)
         self.graph_panel = GraphPanel(self, self.model)
-
+        #
         self._mgr = wx.lib.agw.aui.AuiManager()
         self._mgr.SetManagedWindow(self)
         self._mgr.AddPane(self.controls_panel, wx.lib.agw.aui.AuiPaneInfo().
@@ -396,7 +399,7 @@ class NurbsFoilViewerFrame(wx.Frame):
                                         defaultFile="",
                                         defaultDir=os.environ["FOIL_DATA_FOLDER"],
                                         wildcard="DAT files (*.dat)|*.dat",
-                                        style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.CHANGE_DIR)
+                                        style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_CHANGE_DIR)
         if dat_file_dialog.ShowModal() == wx.ID_OK:
             path = dat_file_dialog.GetPath()
 
@@ -428,7 +431,7 @@ class NurbsFoilViewerFrame(wx.Frame):
         menu_item = wx.MenuItem(parentMenu=menu, id=wx_id, text=text)
         if icon is not None:
             menu_item.SetBitmap(wx.Bitmap(icon))
-        menu.AppendItem(menu_item)
+        menu.Append(menu_item)
         if enabled is True:
             self.Bind(event=wx.EVT_MENU, handler=handler, id=wx_id)
         else:

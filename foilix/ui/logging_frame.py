@@ -213,7 +213,7 @@ class NewLoggingFrame(wx.Frame, Observer):
 
 
 if __name__ == "__main__":
-    app = wx.PySimpleApp()
+    app = wx.App()
     logging_frame = NewLoggingFrame()
     logging_frame.Show()
     app.MainLoop()

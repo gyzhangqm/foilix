@@ -11,25 +11,20 @@ import sys
 # Get rid of : Warning! ***HDF5 library version mismatched error***
 os.environ['HDF5_DISABLE_VERSION_CHECK'] = "2"
 
-
-try:
-    from PySide import QtCore
-    from PySide import QtGui
-except ImportError:
-    # pyqt comes by default with Anaconda
-    from PyQt4 import QtCore
-    from PyQt4 import QtGui
-    QtCore.Signal = QtCore.pyqtSignal
-    QtCore.Slot = QtCore.pyqtSlot
+from PyQt5 import QtCore
+# from PyQt5 import QtGui
+from PyQt5 import QtWidgets
+QtCore.Signal = QtCore.pyqtSignal
+QtCore.Slot = QtCore.pyqtSlot
 import pyqtgraph as pg  # not installed with default Anaconda install
 
 from foilix.foil_generators.parsec import PARSEC
 
 # Create the QApplication object
-qt_app = QtGui.QApplication(sys.argv)
+qt_app = QtWidgets.QApplication(sys.argv)
 
 
-class LabelSliderValue(QtGui.QWidget):
+class LabelSliderValue(QtWidgets.QWidget):
     r"""Widget made of a label, a slider and a value.
 
     The label describes what the data is.
@@ -47,7 +42,7 @@ class LabelSliderValue(QtGui.QWidget):
 
     """
 
-    changed = QtCore.Signal(float)
+    changed = QtCore.pyqtSignal(float)
 
     def __init__(self,
                  label,
@@ -56,29 +51,29 @@ class LabelSliderValue(QtGui.QWidget):
                  initial_value=0,
                  divider=1,
                  suffix=''):
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
 
         self.divider = divider
         self.suffix = suffix
 
-        layout = QtGui.QHBoxLayout(self)
+        layout = QtWidgets.QHBoxLayout(self)
 
         # label
-        lbl = QtGui.QLabel(label, self)
+        lbl = QtWidgets.QLabel(label, self)
         lbl.setMinimumWidth(140)
         lbl.setAlignment(QtCore.Qt.AlignRight)
         lbl.setAlignment(QtCore.Qt.AlignVCenter)
 
         # slider
-        self.sl = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        self.sl = QtWidgets.QSlider(QtCore.Qt.Horizontal, self)
         self.sl.setFocusPolicy(QtCore.Qt.NoFocus)
         self.sl.setMaximum(maximum)
         self.sl.setMinimum(minimum)
-        self.sl.setTickPosition(QtGui.QSlider.TicksBothSides)
+        self.sl.setTickPosition(QtWidgets.QSlider.TicksBothSides)
         self.sl.setValue(initial_value)
 
         # value
-        self.vl = QtGui.QLabel(self.string_value(), self)
+        self.vl = QtWidgets.QLabel(self.string_value(), self)
 
         layout.addWidget(lbl)
         layout.addWidget(self.sl)
@@ -106,17 +101,17 @@ class LabelSliderValue(QtGui.QWidget):
         self.changed.emit(self.numeric_value())
 
 
-class ParsecFoilViewerApp(QtGui.QWidget):
+class ParsecFoilViewerApp(QtWidgets.QWidget):
     r"""A Qt application to visualize symmetrical PARSEC foil sections """
     def __init__(self):
         # Initialize the object as a QLabel
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
 
         # Set the size, alignment, and title
         self.setMinimumSize(QtCore.QSize(600, 400))
         self.setWindowTitle('Symmetrical PARSEC foil viewer')
 
-        layout = QtGui.QVBoxLayout()
+        layout = QtWidgets.QVBoxLayout()
 
         self.thickness_lsv = LabelSliderValue('Thickness',
                                               maximum=1500,
@@ -142,7 +137,7 @@ class ParsecFoilViewerApp(QtGui.QWidget):
                                              maximum=200,
                                              divider=10)
 
-        self.button = QtGui.QPushButton('Toggle scale')
+        self.button = QtWidgets.QPushButton('Toggle scale')
 
         k = {'rle': self.le_radius_lsv.numeric_value(),
              'x_pre': self.max_thickness_x_lsv.numeric_value() / 100,
@@ -213,7 +208,7 @@ class ParsecFoilViewerApp(QtGui.QWidget):
         r"""What happens when a parameter changed"""
         self.plot_foil()
 
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def toggle_scale(self):
         r"""Toggle between real section shape and widened section shape"""
         if self.locked:

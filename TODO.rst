@@ -1,15 +1,19 @@
-Some tests do not pass anymore
+******** Data files (+ RBF interp instead of DB)
 
-Data files (+ RBF interp instead of DB)
+******** Try with xfoil on Linux.
 
-Script the DB creation (bat and/or sh)
+******** Fix the viewers
+
+Make executables from the examples/cases to avoid code duplication every time a new case has to be solved
+
+If xfoil works on linux -> Dockerfile -> CI
 
 Replace doctests (e.g. parsec) by real tests
 
-Try with xfoil on Linux. If it works -> Dockerfile
+Some tests do not pass anymore
 
+Clean DB stuff: some py files are useful (e.g. repanel)!!
 
-More FP + More modular/abstract
 
 Understand why some errors happen (e.g. TypeError for gf_0001.dat)
 
