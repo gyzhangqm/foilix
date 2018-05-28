@@ -49,9 +49,15 @@ class Foil(object):
         name = os.path.splitext(os.path.basename(filepath))[0]
 
         points = list()
-        with open(filepath) as f:
+
+        import sys
+
+        mode = 'rb' if sys.version_info[0] >= 3 else 'r'
+
+        with open(filepath, mode) as f:
             for line in f.readlines():
-                line_items = re.findall(r'\S+', line)
+                regex = b'\S+' if sys.version_info[0] >= 3 else r'\S+'
+                line_items = re.findall(regex, line)
                 try:
                     x, y = float(line_items[0]), float(line_items[1])
                     # see header of bqm34.dat or clarky.dat to see

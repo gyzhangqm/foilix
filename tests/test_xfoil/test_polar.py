@@ -21,9 +21,11 @@ def test_expected_values():
 
     foil = 's1010.dat'
     reynolds = 10000
-    polar = Polar(filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
+    polar = Polar("",
+                  filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
                   angles_of_attack_spec=[0., 10., 1.],
-                  reynolds_number=reynolds, ncrit=2.)
+                  reynolds_number=reynolds,
+                  ncrit=2.)
     polar.compute()
     tolerance = 1e-5
     max_lift_to_drag_value, max_lift_to_drag_angle = polar.max_lift_to_drag
@@ -37,7 +39,8 @@ def test_expected_values():
     assert abs(min_drag_angle - 0.) < tolerance
 
     # Compute every tenth of degree
-    polar = Polar(filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
+    polar = Polar("",
+                  filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
                   angles_of_attack_spec=[0., 10., 0.1],
                   reynolds_number=reynolds, ncrit=2.)
     polar.compute()
@@ -69,10 +72,12 @@ def test_polar_vs_polar_matrix():
     aos_spec = [0., 10., 1.]
     reynolds = 10000
     ncrit = 2.
-    polar = Polar(filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
+    polar = Polar("",
+                  filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
                   angles_of_attack_spec=aos_spec,
                   reynolds_number=reynolds, ncrit=ncrit)
-    polar_matrix = PolarMatrix(filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
+    polar_matrix = PolarMatrix("",
+                               filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
                                angles_of_attack_spec=aos_spec,
                                reynolds_numbers=[reynolds, reynolds, reynolds],
                                ncrits=[ncrit, ncrit])

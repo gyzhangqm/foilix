@@ -232,47 +232,52 @@ def get_data(foil_id, ncrit, reynolds, mach, aoas, iterlim=200):
     return results
 
 if __name__ == "__main__":
+    # TODO: essayer des position de turbulateurs
+    #       -> inclure aux données (e.g. à 10 %, 20 % ..)
+    import time
+    from os.path import basename, splitext
+    from foilix.filters import sort_foils_folder
+    from corelib.core.python_ import py3
+    import pandas as pd
+
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s :: %(levelname)6s :: %(module)20s '
                                ':: %(lineno)3d :: %(message)s')
 
-    from corelib.core.python_ import py3
-
     if py3() is False:
-        from foilix.foils_eval import sort_foils_folder
-
         sym, asym = sort_foils_folder("../foil_dat")
-        print(sym)
+        sym_foil_ids = [splitext(basename(p))[0] for p in sym]
+        sym_foil_ids.append("ht05")
+        sym_foil_ids.append("ht08")
+        sym_foil_ids.append("ht12")
+        sym_foil_ids.append("ht13")
+        sym_foil_ids.append("ht14")
 
-        if False:
-            create_data("naca0006",
-                        ncrits=[1., 2., 3., 4.],
-                        # reynoldss=[5e4, 1e5, 1.5e5, 2e5],
-                        reynoldss=np.arange(5e3, 2e5 + 1, 5e3),
-                        machs=[0.],
-                        aoas=[0., 15., 1.],
-                        iterlim=200,
-                        formats=["csv", "ndf"])
+        logger.info("Processing %i symmetrical foils" % len(sym_foil_ids))
 
-        import pandas as pd
-        import time
-        ta = time.time()
-        df = pd.read_csv("../foil_data/naca0006.csv")
-        tb = time.time()
-        print("Pandas csv read took %f s" % (tb -ta))
-        print("%i records in csv file" % df.shape[0])
-        # print(df.dtypes)
-        # print(df.columns)
-        # print(df.describe())
-        df1 = df.dropna(how='any')
-        print("%i valid records in csv file" % df1.shape[0])
+        if True:
+            for foil_id in sym_foil_ids:
+                logger.info("Processing %s" % foil_id)
+                create_data(foil_id,
+                            ncrits=[1., 2., 3., 4.],
+                            # reynoldss=[5e4, 1e5, 1.5e5, 2e5],
+                            reynoldss=np.arange(5e3, 3e5 + 1, 5e3),
+                            machs=[0.],
+                            aoas=[0., 15., 1.],
+                            iterlim=200,
+                            formats=["csv", "ndf"])
 
-        # essayer des position de turbulateurs -> inclure aux données (e.g. à 10 %, 20 % ..)
+                ta = time.time()
+                df = pd.read_csv("../foil_data/%s.csv" % foil_id)
+                tb = time.time()
+                logger.info("Pandas csv read took %f s" % (tb -ta))
+                logger.info("%i records in csv file" % df.shape[0])
+                df1 = df.dropna(how='any')
+                logger.info("%i valid records in csv file" % df1.shape[0])
 
-        # print(df1.describe())
-
-        df2 = pd.read_csv("../foil_data/naca0006.ndf", skiprows=1, delimiter=r"\s+")
-        # print(df.describe())
-        print("%i records in ndf file" % df2.shape[0])
+                df2 = pd.read_csv("../foil_data/%s.ndf" % foil_id,
+                                  skiprows=1,
+                                  delimiter=r"\s+")
+                logger.info("%i records in ndf file" % df2.shape[0])
     else:
         raise EnvironmentError("Generating the data works better with Python 2")

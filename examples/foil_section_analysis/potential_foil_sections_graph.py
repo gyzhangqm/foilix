@@ -9,7 +9,7 @@ from __future__ import print_function
 
 import logging
 
-from foilix.db.query import data_from_db
+from foilix.db_deprecated.query import data_from_db
 from matplotlib import pyplot as plt
 import os.path
 

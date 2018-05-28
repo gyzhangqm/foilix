@@ -21,11 +21,13 @@ def test_different_ncrits():
 
     foil = 's1010.dat'
     reynolds = 10000
-    polar_1 = Polar(filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
+    polar_1 = Polar("",
+                    filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
                     angles_of_attack_spec=[0., 10., 1.],
                     reynolds_number=reynolds,
                     ncrit=2.)
-    polar_2 = Polar(filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
+    polar_2 = Polar("",
+                    filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
                     angles_of_attack_spec=[0., 10., 1.],
                     reynolds_number=reynolds,
                     ncrit=3.)
@@ -44,11 +46,13 @@ def test_same_ncrits():
 
     foil = 'naca0006.dat'
     reynolds = 10000
-    polar_1 = Polar(filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
+    polar_1 = Polar("",
+                    filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
                     angles_of_attack_spec=[0., 10., 1.],
                     reynolds_number=reynolds,
                     ncrit=2.)
-    polar_2 = Polar(filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
+    polar_2 = Polar("",
+                    filename=XFOIL_EXE_TO_DAT_RELPATH % foil,
                     angles_of_attack_spec=[0., 10., 1.],
                     reynolds_number=reynolds,
                     ncrit=2.)

@@ -5,6 +5,8 @@ r"""PSO UI monitoring tool"""
 
 from __future__ import division
 
+import sys
+
 import wx
 from wx.lib.agw import ultimatelistctrl as ULC
 
@@ -207,9 +209,11 @@ class NewLoggingFrame(wx.Frame, Observer):
         self.nb_records += 1
 
     def _on_close(self, event):
-        self.ultimate_list.this.disown()
+        # self.ultimate_list.this.disown()
         wx.Log.SetActiveTarget(None)
         event.Skip()
+        self.Destroy()
+        sys.exit(0)
 
 
 if __name__ == "__main__":

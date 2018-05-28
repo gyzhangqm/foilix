@@ -257,3 +257,26 @@ def test_area(rle,
          'xte': xte,
          'yte': yte}
     assert PARSEC(k).area() > 0.0
+
+
+def test_symmetrical_parsec():
+    r"""Test that comes from an old doctest"""
+    # Symmetrical foil section
+    x = 0.25
+    y = 0.03
+    d2ydx2 = 0.25
+    th = 6.
+    k = {'rle': .005,
+         'x_pre': x,
+         'y_pre': -y,
+         'd2ydx2_pre': d2ydx2,
+         'th_pre': th,
+         'x_suc': x,
+         'y_suc': y,
+         'd2ydx2_suc': -d2ydx2,
+         'th_suc': -th,
+         'xte': 1.,
+         'yte': 0.}
+    foil = PARSEC(k)
+    assert foil.is_symmetrical() is True
+    assert foil.is_valid() is True

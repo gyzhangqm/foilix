@@ -19,38 +19,6 @@ from foilix.optimization.scoring import yacht_appendage_scoring
 logger = logging.getLogger(__name__)
 
 
-def sort_foils_folder(foil_data_folder):
-    r"""Separate file names related to symmetrical foils from file names
-    related to unsymmetrical foils
-
-    Parameters
-    ----------
-    foil_data_folder : str
-        Path to the folder where the foil dat files are
-
-    Returns
-    -------
-    tuple(list[str], list[str])
-        (List of symmetrical foils file paths,
-         list of unsymmetrical foils files paths)
-
-    """
-    # foil_data_folder = os.path.abspath(foil_data_folder)
-    dat_files = [os.path.join(foil_data_folder, f)
-                 for f in os.listdir(foil_data_folder)
-                 if re.match(r".*\.dat", f)]
-    foils = [Foil.from_dat_file(dt) for dt in dat_files]
-
-    foils_symmetrical, foils_unsymmetrical = list(), list()
-
-    for i, foil in enumerate(foils):
-        if foil.is_symmetrical() is True:
-            foils_symmetrical.append(dat_files[i])
-        else:
-            foils_unsymmetrical.append(dat_files[i])
-    return foils_symmetrical, foils_unsymmetrical
-
-
 # @timeout(60)
 def compute(polar_matrix):
     r"""Call to polar_matrix.compute in a function
@@ -67,7 +35,8 @@ def compute(polar_matrix):
     polar_matrix.compute()
 
 
-def eval_foils(file_list,
+def eval_foils(foil_data_folder,
+               file_list,
                logfile_name,
                max_thickness,
                angles_of_attack_spec,
@@ -135,12 +104,14 @@ def eval_foils(file_list,
         try:
             foil = Foil.from_dat_file(foil_file)
             if foil.y_spread <= max_thickness:
-                pm = PolarMatrix(foil_file,
+                pm = PolarMatrix(foil_data_folder,
+                                 foil_file,
                                  angles_of_attack_spec=angles_of_attack_spec,
                                  reynolds_numbers=reynolds_numbers,
                                  ncrits=ncrits,
-                                 # use_db -> db must have been fed before
-                                 use_db=True)
+                                 # use_precomputed_data -> db_deprecated must have been fed before
+                                 use_precomputed_data=True
+                                 )
                 compute(pm)
 
                 logger.debug("pm.avg_max_lift : %s" % str(pm.avg_max_lift))

@@ -201,11 +201,13 @@ class CompoundScoreSectionScorer(Scorer):
         try:
             # instantiating XFoilScorer trigger the run() method of XFoilPilot
             # scorer = foilix.xfoil.xfoil.XFoilScorer(pilot)
-            matrix = foilix.xfoil.polar.PolarMatrix(filename,
+            matrix = foilix.xfoil.polar.PolarMatrix("",
+                                                    filename,
                                                     self.angles_of_attack,
                                                     self.reynolds,
                                                     self.ncrits,
-                                                    self.iterlim)
+                                                    self.iterlim,
+                                                    use_precomputed_data=False)
             matrix.compute()
 
             try:
@@ -379,12 +381,13 @@ class YachtAppendageSectionScorer(Scorer):
         try:
             # instantiating XFoilScorer trigger the run() method of XFoilPilot
             # scorer = foilix.xfoil.xfoil.XFoilScorer(pilot)
-            matrix = foilix.xfoil.polar.PolarMatrix(filename,
+            matrix = foilix.xfoil.polar.PolarMatrix("",  # who cares about precomputed data !
+                                                    filename,
                                                     self.angles_of_attack,
                                                     self.reynolds,
                                                     self.ncrits,
                                                     self.iterlim,
-                                                    use_db=False)
+                                                    use_precomputed_data=False)
             matrix.compute()
 
             try:

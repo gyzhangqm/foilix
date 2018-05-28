@@ -1,68 +1,27 @@
-******** Data files (+ RBF interp instead of DB)
+View some polars from RBF partial data model to check there are no oscillations or other strange things
+  Add polar builder to data api code
+*_xtr should never be negative or > 1
 
-******** Try with xfoil on Linux.
-
-******** Fix the viewers
-
-Make executables from the examples/cases to avoid code duplication every time a new case has to be solved
+-> Make executables from the examples/cases to avoid code duplication every time a new case has to be solved
+    On peut faire les optims NURBS et PARSEC en même temps si on modifie le nom des fichiers générés !
+    -> foilix needs to be installed -> conda package
 
 If xfoil works on linux -> Dockerfile -> CI
 
-Replace doctests (e.g. parsec) by real tests
-
 Some tests do not pass anymore
 
-Clean DB stuff: some py files are useful (e.g. repanel)!!
+Basic doc
 
+Is PSO the best way? Create a metamodel and look for mins?
 
-Understand why some errors happen (e.g. TypeError for gf_0001.dat)
-
-Polar taking Cl instead of aoas as input
-    It is the same in the end as drag at Cl==0.5 could be obtained by interpolation of Cd = f(Cl)
-
-Interpolating with PChip is not useful to determines maximums and minimums dur to the nature of PChip (polar.py)
-    The interpolation slows down db digging  lot
-    Have an option to determine which interpolation should be used (linear will do as well as PChip for mins and maxs but faster)
-
-More points would be required in db for more precision (db digging and optimization have to be done on the same angles)
-    The max L/D and max lift would get more realistic instead of being limited to definition angles
-    (side effect of using PChip interpolation in Polar)
-
-Check for is_symmetrical instead of is_symmetrical() in every file
-
-Drag logic for yachts: min_drag + avg drag at a set of Cl ??
-
-Some calculation stall at 11 degrees when feeding db -> try to timeout find_coefficients
-ys900 not computed -> why
-
-Check optimization foil robustness outside of optimization domain -> how?
 
 Xfoil
 -----
 
 Influence of the number of panels
 
-UI
---
-
-Add sorting and foil thumbnails to NewLoggingFrame
-
-Code
-----
-
-optimize with opemMDAO or pyopt, so that more tha a single strategy can be used
-
-Write a test pour exclusion formes + larges que max_thickness dans is_valid() de parsec.py
-
-better setup.py
-
-github repo tags in sync with what is recommended in best practises
-
 
 Optimization strategies
 -----------------------
 
 Optimal parameters selection for PSO (cf. http://hvass-labs.org/people/magnus/publications/pedersen10good-pso.pdf)
-
-Study OpenMDAO
-https://github.com/OpenMDAO-Plugins/pyopt_driver/blob/master/docs/usage.rst

@@ -3,6 +3,8 @@
 
 r"""wx based parsec foil and dat foil file viewer"""
 
+import sys
+
 import os
 import logging
 
@@ -374,7 +376,10 @@ class ParsecFoilViewerFrame(wx.Frame):
     save_on_close : str or None
         If None, do nothing. If valid file path, save the parameters values
     """
-    def __init__(self, model, title="Parsec Foil Viewer", save_on_close=None):
+    def __init__(self, model,
+                 title="Parsec Foil Viewer",
+                 save_on_close=None,
+                 default_dat_folder=""):
         super(ParsecFoilViewerFrame, self).__init__(None,
                                                     wx.ID_ANY,
                                                     title=title,
@@ -382,6 +387,7 @@ class ParsecFoilViewerFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.on_close)
         self.model = model
         self.save_on_close = save_on_close
+        self.default_dat_folder = default_dat_folder
 
         menubar = wx.MenuBar()
 
@@ -423,7 +429,7 @@ class ParsecFoilViewerFrame(wx.Frame):
         dat_file_dialog = wx.FileDialog(self,
                                         message="Choose a file",
                                         defaultFile="",
-                                        defaultDir=os.environ["FOIL_DATA_FOLDER"],
+                                        defaultDir=self.default_dat_folder,
                                         wildcard="DAT files (*.dat)|*.dat",
                                         style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_CHANGE_DIR)
         if dat_file_dialog.ShowModal() == wx.ID_OK:
@@ -487,7 +493,7 @@ class ParsecFoilViewerFrame(wx.Frame):
                     f.write("le_radius,%s" % str(self.controls_panel.le_radius_widget.spinner.GetValue()) + "\n")
                     f.write("te_angle,%s" % str(self.controls_panel.te_angle_widget.spinner.GetValue()) + "\n")
             self.Destroy()
-        # self.Destroy()
+            sys.exit(0)
 
 
 if __name__ == "__main__":

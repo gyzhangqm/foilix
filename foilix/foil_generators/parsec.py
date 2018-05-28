@@ -24,32 +24,6 @@ class PARSEC(foilix.foil_generators.parametric_foil.ParametricFoil):
     http://www.as.dlr.de/hs/h-pdf/H141.pdf
     http://github.com/dqsis/parsec-airfoils
 
-    Doctests
-    --------
-    # Symmetrical foil section
-    >>> x = 0.25
-    >>> y = 0.03
-    >>> d2ydx2 = 0.25
-    >>> th = 6.
-    >>> k = {'rle': .005,'x_pre': x, 'y_pre': -y, 'd2ydx2_pre': d2ydx2, 'th_pre': th, 'x_suc': x, 'y_suc': y, 'd2ydx2_suc': -d2ydx2, 'th_suc': -th, 'xte': 1., 'yte': 0.}
-    >>> foil = PARSEC(k)
-    >>> print(foil)
-    Airfoil with PARSEC parametrization. Coefficients: 
-    {'y_pre': -0.03,
-    'x_suc': 0.25,
-    'x_pre': 0.25,
-    'rle': 0.005,
-    'y_suc': 0.03,
-    'd2ydx2_pre': 0.25,
-    'th_pre': 6.0,
-    'd2ydx2_suc': -0.25,
-    'xte': 1.0,
-    'th_suc': -6.0,
-    'yte': 0.0}
-    >>> foil.is_symmetrical()
-    True
-    >>> foil.is_valid()
-    True
     """
 
     def __init__(self, k):
@@ -107,7 +81,7 @@ class PARSEC(foilix.foil_generators.parametric_foil.ParametricFoil):
         try:
             # Parent class contains functions that need to know x-pos of TE
             self.xte = k['xte']
-    
+
             self.coeffs_upper = self._pcoef(k['xte'],
                                             k['yte'],
                                             k['rle'],
