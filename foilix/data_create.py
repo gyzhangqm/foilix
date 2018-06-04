@@ -113,7 +113,7 @@ def create_data(foil_id,
                                 msg = "aoa twice or more results !!"
                                 raise AssertionError(msg)
 
-                            a, cl, cd, cdp, cm, top_xtr, bot_xtr, warnings = \
+                            _, cl, cd, cdp, cm, top_xtr, bot_xtr, warnings = \
                                 (aoa,
                                  float('nan'),
                                  float('nan'),
@@ -143,7 +143,7 @@ def create_data(foil_id,
                     msg = "%s timedout for mach: %f, ncrit: %f, " \
                           "reynolds: %f" % (foil_id, mach, ncrit, reynolds)
                     logger.error(msg)
-                    for i, aoa in enumerate(
+                    for _, aoa in enumerate(
                             np.arange(aoas[0],
                                       aoas[1] + aoas[2] / 2.,
                                       aoas[2])):

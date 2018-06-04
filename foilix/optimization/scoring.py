@@ -375,7 +375,8 @@ class YachtAppendageSectionScorer(Scorer):
 
         # iterlim checks
         # assert iterlim > 0 and type(iterlim) is int
-        if not (iterlim > 0 and type(iterlim) is int):
+        # if not (iterlim > 0 and type(iterlim) is int):
+        if not (iterlim > 0 and isinstance(iterlim, int)):
             msg = "iterlim should be a strictly positive integer"
             raise ValueError(msg)
 

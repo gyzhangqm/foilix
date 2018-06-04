@@ -418,8 +418,8 @@ class PolarMatrix(object):
         """
         accumulator_value = 0
         count = 0
-        for i, rn in enumerate(self._reynolds_numbers):
-            for j, nc in enumerate(self._ncrits):
+        for i, _ in enumerate(self._reynolds_numbers):
+            for j, _ in enumerate(self._ncrits):
                 accumulator_value += self.matrix[i][j].coefficients_of_lift_interpolator(angle_of_attack)
                 count += 1
         return accumulator_value / count

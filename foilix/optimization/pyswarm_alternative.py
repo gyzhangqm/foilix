@@ -12,7 +12,7 @@ This version has been vectorised/optimised more than the original
 import numpy as np
 
 
-def pso(func, lb, ub, ieqcons=None, f_ieqcons=None, args=(), kwargs={},
+def pso(func, lb, ub, ieqcons=None, f_ieqcons=None, args=(), kwargs=None,
         func_takes_multiple=False, swarmsize=100, omega=0.5, phip=0.5, phig=0.5,
         maxiter=100, minstep=1e-8, minfunc=1e-8, debug=False, info=True):
     """
@@ -86,6 +86,8 @@ def pso(func, lb, ub, ieqcons=None, f_ieqcons=None, args=(), kwargs={},
     """
     if ieqcons is None:
         ieqcons = []
+    if kwargs is None:
+        kwargs = {}
 
     # assert len(lb) == len(ub),
     #                          'Lower- and upper-bounds must be the same length'

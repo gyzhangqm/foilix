@@ -63,13 +63,13 @@ print('  Deflection   <= 0.25 inches')
 
 def weight(x, *args):
     H, d, t = x  # all in inches
-    B, rho, _, P = args
+    B, rho, _, _ = args
     return rho * 2 * np.pi * d * t * np.sqrt((B/2)**2 + H**2)
 
 
 def stress(x, *args):
     H, d, t = x  # all in inches
-    B, rho, E, P = args
+    B, rho, _, P = args
     return (P * np.sqrt((B / 2)**2 + H**2)) / (2 * t *np.pi * d * H)
 
 
