@@ -125,6 +125,14 @@ def main(parameterization):
 
 if __name__ == "__main__":
 
+    import sys
+
+    if sys.version_info[0] < 3:
+        print("Using Python 2 -> Ok, this is faster")
+    else:
+        print("Using Python 3 -> BEWARE, Python 3 is slower than Python 2 "
+              "for optimization")
+
     if not isdir(join(getcwd(), "logs")):
         mkdir(join(getcwd(), "logs"))
 

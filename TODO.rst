@@ -6,7 +6,7 @@ View some polars from RBF partial data model to check there are no oscillations 
     On peut faire les optims NURBS et PARSEC en même temps si on modifie le nom des fichiers générés !
     -> foilix needs to be installed -> conda package
 
-If xfoil works on linux -> Dockerfile -> CI
+******** If xfoil works on linux -> Dockerfile -> CI
 
 Some tests do not pass anymore
 
@@ -14,10 +14,10 @@ Basic doc
 
 Is PSO the best way? Create a metamodel and look for mins?
 
-Add a Python version test at step 3 (optimizing under Python 2 would be faster)
+******** Add a Python version test at step 3 (optimizing under Python 2 would be faster)
 
 
-Binaries in setup
+******** Binaries in setup
 
 
 Xfoil
