@@ -2,8 +2,8 @@
 
 home="${1:-$HOME}"
 
-imageName="guillaume-florent/foilix:latest"
-containerName="foilix"
+imageName="guillaume-florent/foilix-py3:latest"
+containerName="foilix-py3"
 displayVar="$DISPLAY"
 
 docker build --file Dockerfile.py3 --tag ${imageName} .

@@ -1,3 +1,5 @@
+# NOTE : foilix uses libra that is py3 only
+# yet, an optimization will run under py2
 sudo: required
 
 git:
@@ -8,11 +10,9 @@ services:
 
 install:
   - docker build --file Dockerfile.py3 --tag guillaume-florent/foilix-py3:latest .
-  - docker build --file Dockerfile.py2 --tag guillaume-florent/foilix-py2:latest .
 
 script:
   - docker run guillaume-florent/foilix-py3:latest /bin/bash -c "cd /opt/foilix;pytest tests/"
-  - docker run guillaume-florent/foilix-py2:latest /bin/bash -c "cd /opt/foilix;pytest tests/"
 
 after_script:
   - docker images
