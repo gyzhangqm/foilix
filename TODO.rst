@@ -14,6 +14,8 @@ Basic doc
 
 Is PSO the best way? Create a metamodel and look for mins?
 
+Add a Python version test at step 3 (optimizing under Python 2 would be faster)
+
 
 Xfoil
 -----

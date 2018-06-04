@@ -19,12 +19,7 @@ Goals:
 - score a 2D foil section by using weighting factors for its main characteristics (L max; L/D max, min drag)
 
 
-Environment variables
----------------------
-
-FOIL_DATA_FOLDER
-FOILIX_DB_SQLITE_PATH
-
+The bin folder should be in PATH (either manually by altering bashrc or via a conda install (to be created)
 
 Getting started
 ---------------
@@ -42,17 +37,17 @@ For some reason, the optimization algorithms run much faster in Python 2. An inv
 Xfoil
 -----
 
-Xfoil_ is an interactive program for the design and analysis of subsonic isolated airfoils. 
-Given the coordinates specifying the shape of a 2D airfoil, Reynolds and Mach numbers, XFOIL can calculate the 
-pressure distribution on the airfoil and hence lift and drag characteristics. 
-The program also allows inverse design - it will vary an airfoil shape to achieve the desired parameters. 
+Xfoil_ is an interactive program for the design and analysis of subsonic isolated airfoils.
+Given the coordinates specifying the shape of a 2D airfoil, Reynolds and Mach numbers, XFOIL can calculate the
+pressure distribution on the airfoil and hence lift and drag characteristics.
+The program also allows inverse design - it will vary an airfoil shape to achieve the desired parameters.
 It is released under the GNU GPL.
 
 Particle Swarm Optimization
 ---------------------------
 
-PSO is an optimization technique inspired by a flock of birds searching for food. 
+PSO is an optimization technique inspired by a flock of birds searching for food.
 It is relatively simple, doesn't concern itself with gradients, and often outperforms more complex techniques like genetic algorithms.
 
-It can easily be applied to airfoils, simply by translating the list of constrained numbers into an airfoil, 
+It can easily be applied to airfoils, simply by translating the list of constrained numbers into an airfoil,
 then scoring the airfoil using the **xfoil.py** module to get lift, drag, moment or anything else at a specified Re and alpha or Cl.
