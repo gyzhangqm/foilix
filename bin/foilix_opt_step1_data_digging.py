@@ -32,7 +32,7 @@ def dig():
         # ------------------------------------------------------------------
         # Evaluate foils in database with scoring / find the best candidates
         # ------------------------------------------------------------------
-        symmetrical_sections_filepaths, assymetrical_sections_filepaths = \
+        symmetrical_sections_filepaths, _ = \
             sort_foils_folder(config["foil_dat_folder"])
         logger.info("There are %i symmetrical foils in the foils database" %
                     len(symmetrical_sections_filepaths))

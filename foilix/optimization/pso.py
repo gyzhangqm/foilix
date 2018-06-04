@@ -142,7 +142,7 @@ class Particle(object):
         r"""Print values of Particle."""
         return "Constraints: " + self.constraints.__str__() + \
                "\nValues: " + self.pts.__str__()
-    
+
     def APSO(self, global_best, B, a):
         r"""A simplified way of PSO, with no velocity,
                                              updating the particle in one step.

@@ -9,17 +9,17 @@ from __future__ import print_function
 
 import logging
 
-from foilix.db_deprecated.query import data_from_db
+from foilix.data_api import get_data_tuple
 from matplotlib import pyplot as plt
 import os.path
 
 
-def potential_foil_sections_analysis(sections, rns, ncrits, aoa):
+def potential_foil_sections_analysis(foil_ids, rns, ncrits, aoa):
     r"""Runs the example"
 
     Parameters
     ----------
-    sections
+    foil_ids
     rns
     ncrits
     aoa
@@ -32,17 +32,19 @@ def potential_foil_sections_analysis(sections, rns, ncrits, aoa):
 
     colors = ['red', 'blue', 'orange', 'black']
 
-    for i, section in enumerate(sections):
+    for i, foil_id in enumerate(foil_ids):
         for nc in ncrits:
             l_to_d = list()
             rnsc = rns[:]
             for rn in rns:
                 try:
-                    cl, cd, cdp, cm, top_xtr, bot_xtr = data_from_db(section,
-                                                                     aoa,
-                                                                     rn,
-                                                                     nc,
-                                                                     mach=0.)
+                    cl, cd, _, _, _, _ = \
+                        get_data_tuple("../../foil_data",
+                                       foil_id,
+                                       mach=0.,
+                                       ncrit=nc,
+                                       reynolds=rn,
+                                       aoa=aoa)
                     l_to_d.append(cl/cd)
                 except TypeError:
                     print("data not found")
@@ -50,7 +52,7 @@ def potential_foil_sections_analysis(sections, rns, ncrits, aoa):
             axes.plot(rnsc,
                       l_to_d,
                       color=colors[i],
-                      label="%s - ncrit=%.1f" % (os.path.basename(section),
+                      label="%s - ncrit=%.1f" % (os.path.basename(foil_id),
                                                  nc))
 
     axes.set_title("L/D at %.1f deg" % aoa)
@@ -67,10 +69,10 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s :: %(levelname)6s :: %(module)20s '
                                ':: %(lineno)3d :: %(message)s')
-    potential_foil_sections_analysis(sections=["../../foil_dat/hq07.dat",
-                                               "../../foil_dat/s1010.dat",
-                                               "../../foil_dat/naca0006.dat",
-                                               "../../foil_dat/n0009sm.dat"],
+    potential_foil_sections_analysis(foil_ids=["hq07",
+                                               "s1010",
+                                               "naca0006",
+                                               "n0009sm"],
                                      rns=[1.5e4, 3e4, 4.5e4, 6e4],
                                      ncrits=[1.5, 2.],
                                      aoa=6.)

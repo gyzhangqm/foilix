@@ -61,7 +61,7 @@ class CompoundScoreSectionScorer(Scorer):
     ncrits : list[positive float]
         xfoil ncrits
     iterlim : int
-        xfoil iterlim (maximum number of iterations in xfoil 
+        xfoil iterlim (maximum number of iterations in xfoil
                        to reach convergence)
     max_lift_scaling : float, optional
         multiplier of maximum lift
@@ -138,7 +138,8 @@ class CompoundScoreSectionScorer(Scorer):
 
         # iterlim checks
         # assert iterlim > 0 and type(iterlim) is int
-        if not (iterlim > 0 and type(iterlim) is int):
+        # if not (iterlim > 0 and type(iterlim) is int):
+        if not (iterlim > 0 and isinstance(iterlim, int)):
             msg = "iterlim should be a strictly positive integer"
             raise ValueError(msg)
 
@@ -320,7 +321,7 @@ class YachtAppendageSectionScorer(Scorer):
     ncrits : list[positive float]
         xfoil ncrits
     iterlim : int
-        xfoil iterlim (maximum number of iterations in xfoil to 
+        xfoil iterlim (maximum number of iterations in xfoil to
                        reach convergence)
     inv_min_drag_scaling : float, optional
         multiplier of the inverse of minimum drag
@@ -472,7 +473,7 @@ class YachtAppendageSectionScorer(Scorer):
             matrix.compute()
 
             try:
-                avg_min_drag, avg_min_drag_angle = matrix.avg_min_drag
+                avg_min_drag, _ = matrix.avg_min_drag
                 score = yacht_appendage_scoring([matrix.avg_lift_to_drag(angle)
                                                  for angle in self.aoa_ld],
                                                 avg_min_drag,

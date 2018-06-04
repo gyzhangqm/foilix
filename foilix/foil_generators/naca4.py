@@ -75,7 +75,7 @@ class NACA4(ParametricFoil):
         else:
             return False
 
-    def _fn_upper_lower(self, x):
+    def _fn_upper_lower(self, xpts):
         r"""Implements proper coordinate calculation, using camberline direction
 
         Parameter
@@ -88,11 +88,11 @@ class NACA4(ParametricFoil):
         (x_upper, y_upper, x_lower, y_lower, x_camber, y_camber)
 
         """
-        y_t = self._thickness(x)
-        y_c = self._camberline(x)
+        y_t = self._thickness(xpts)
+        y_c = self._camberline(xpts)
 
         # Calculate camber line derivative using central difference
-        dx = np.gradient(x)
+        dx = np.gradient(xpts)
 
         # Numpy 1.12 induced bug correction
         # dyc_dx = np.gradient(y_c, dx)
@@ -102,8 +102,8 @@ class NACA4(ParametricFoil):
         # Can be made even more accurate by using second-order fwd diff,
         # but that is not so straightforward when step size differs.
         # Numpy 1.9.1 supports edge_order=2 in np.gradient()
-        dyc_dx[0] = (y_c[1] - y_c[0]) / (x[1] - x[0])
-        dyc_dx[-1] = (y_c[-2] - y_c[-1]) / (x[-2] - x[-1])
+        dyc_dx[0] = (y_c[1] - y_c[0]) / (xpts[1] - xpts[0])
+        dyc_dx[-1] = (y_c[-2] - y_c[-1]) / (xpts[-2] - xpts[-1])
 
         # Calculate camberline angle
         theta = np.arctan(dyc_dx)
@@ -111,17 +111,17 @@ class NACA4(ParametricFoil):
         # Calculate x,y of upper, lower surfaces
         # From http://web.stanford.edu/~cantwell/AA200_Course_Material/
         #                                      The%20NACA%20airfoil%20series.pdf
-        x_l = x - y_t * np.sin(theta)
+        x_l = xpts - y_t * np.sin(theta)
 
         # reverse sign for coherence with parsec
         y_l = (y_c + y_t * np.cos(theta))
 
-        x_u = x + y_t * np.sin(theta)
+        x_u = xpts + y_t * np.sin(theta)
 
         # reverse sign for coherence with parsec
         y_u = (y_c - y_t * np.cos(theta))
 
-        return x_u, y_u, x_l, y_l, x, y_c
+        return x_u, y_u, x_l, y_l, xpts, y_c
 
     def _camberline(self, xpts):
         max_camber, max_camber_position = \
@@ -143,12 +143,12 @@ class NACA4(ParametricFoil):
                      max_camber_position * xpts1 - xpts1**2))
             return np.append(y_c0, y_c1)
 
-    def _thickness(self, x):
+    def _thickness(self, xpts):
         r"""Computes the thicknesses at the input locations
 
         Parameters
         ----------
-        x : 1D numpy/ndarray of floats
+        xpts : 1D numpy/ndarray of floats
             Locations along the chord (usually between 0 and 1)
 
         Returns
@@ -158,11 +158,11 @@ class NACA4(ParametricFoil):
         """
         thickness = self.thickness
         c = (.2969, .1260, .3516, .2843, .1015)
-        y_t = thickness / .2 * (c[0] * x**.5
-                                - c[1] * x
-                                - c[2] * x**2
-                                + c[3] * x**3
-                                - c[4] * x**4)
+        y_t = thickness / .2 * (c[0] * xpts ** .5
+                                - c[1] * xpts
+                                - c[2] * xpts ** 2
+                                + c[3] * xpts ** 3
+                                - c[4] * xpts ** 4)
         return y_t
 
     def __str__(self):

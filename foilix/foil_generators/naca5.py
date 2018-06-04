@@ -52,7 +52,7 @@ class NACA5(ParametricFoil):
             raise Warning("Unknown airfoil number. Try again.")
         # print self.m,self.k1,self.p
 
-    def _fn_upper_lower(self, x):
+    def _fn_upper_lower(self, xpts):
         """Implements proper coordinate calculation, using camberline direction.
 
         Returns
@@ -60,10 +60,10 @@ class NACA5(ParametricFoil):
         (x_upper, y_upper, x_lower, y_lower, x_camber, y_camber)
 
         """
-        y_t = self._thickness(x)
-        y_c = self._camberline(x)
+        y_t = self._thickness(xpts)
+        y_c = self._camberline(xpts)
         # Calculate camber line derivative using central difference
-        dx = np.gradient(x)
+        dx = np.gradient(xpts)
 
         # Numpy 1.12 induced bug correction
         # dyc_dx = np.gradient(y_c, dx)
@@ -73,22 +73,23 @@ class NACA5(ParametricFoil):
         # Can be made even more accurate by using second-order fwd diff,
         # but that is not so straightforward when step size differs.
         # Numpy 1.9.1 supports edge_order=2 in np.gradient()
-        dyc_dx[0] = (y_c[1]-y_c[0]) / (x[1]-x[0])
-        dyc_dx[-1] = (y_c[-2]-y_c[-1]) / (x[-2]-x[-1])
+        dyc_dx[0] = (y_c[1]-y_c[0]) / (xpts[1] - xpts[0])
+        dyc_dx[-1] = (y_c[-2]-y_c[-1]) / (xpts[-2] - xpts[-1])
         # Calculate camberline angle
         theta = np.arctan(dyc_dx)
         # Calculate x,y of upper, lower surfaces
         # From http://web.stanford.edu/~cantwell/AA200_Course_Material/
         # The%20NACA%20airfoil%20series.pdf
-        x_u = x - y_t*np.sin(theta)
+        x_u = xpts - y_t * np.sin(theta)
         y_u = y_c + y_t*np.cos(theta)
-        x_l = x + y_t*np.sin(theta)
+        x_l = xpts + y_t * np.sin(theta)
         y_l = y_c - y_t*np.cos(theta)
-        return x_l, y_l, x_u, y_u, x, y_c
+        return x_l, y_l, x_u, y_u, xpts, y_c
 
     def max_thickness(self):
         """Numerically compute max. thickness of airfoil"""
-        x_l, y_l, x_u, y_u = self.get_coords()[:4]
+        # x_l, y_l, x_u, y_u = self.get_coords()[:4]
+        _, y_l, _, y_u = self.get_coords()[:4]
         return max(y_u) - min(y_l)
 
     def _camberline(self, xpts):
@@ -109,10 +110,10 @@ class NACA5(ParametricFoil):
             yc_1 = k1*m**3/6 * (1-xpts1)
             return np.append(yc_0, yc_1)
 
-    def _thickness(self, x):
+    def _thickness(self, xpts):
         t = self.t
         c = (.2969, .1260, .3516, .2843, .1015)
-        y_t = t/.2 * (c[0]*x**.5-c[1]*x-c[2]*x**2+c[3]*x**3-c[4]*x**4)
+        y_t = t/.2 * (c[0] * xpts ** .5 - c[1] * xpts - c[2] * xpts ** 2 + c[3] * xpts ** 3 - c[4] * xpts ** 4)
         return y_t
 
     def __str__(self):

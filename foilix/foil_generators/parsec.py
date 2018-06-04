@@ -251,7 +251,8 @@ class PARSEC(foilix.foil_generators.parametric_foil.ParametricFoil):
             if self.k['th_pre'] < 0 or self.k['th_suc'] > 0:
                 return False
 
-            x_l, y_l, x_u, y_u = self.get_coords()[:4]
+            # x_l, y_l, x_u, y_u = self.get_coords()[:4]
+            _, y_l, _, y_u = self.get_coords()[:4]
 
             # Check that the pressure side or the suction side
             # do not cross the y=0 axis
@@ -263,7 +264,11 @@ class PARSEC(foilix.foil_generators.parametric_foil.ParametricFoil):
             min_y_coord = min(y_l)
 
             real_thickness = max_y_coord - min_y_coord
-            assert real_thickness > 0.
+            # assert real_thickness > 0.
+            if real_thickness <= 0.:
+                msg = "real_thickness expected to be strictly positive " \
+                      "but is %f" % real_thickness
+                raise AssertionError(msg)
             if real_thickness <= 0.:
                 msg = "real_thickness is expected to be strictly positive. " \
                       "Yet, it is %f" % real_thickness

@@ -8,7 +8,8 @@ Original Paper: http://eprints.soton.ac.uk/50031/1/Sobe07.pdf
 
 from __future__ import print_function, division
 
-from math import cos, sin, pi, pow
+import math  # write math.pow instead of pow for clarity (not pow builtin)
+from math import cos, sin, pi
 
 import numpy as np
 
@@ -82,8 +83,8 @@ class NURBS(ParametricFoil):
             temp_var = np.array([[A[j]], [B[j]], [TA_u[j]], [TB_u[j]]])
 
             temp_var_coord = np.dot(temp_var1, temp_var)
-            for i in range(len(u)):
-                temp_var4 = [1, u[i], u[i]**2, pow(u[i], 3)]
+            for value in u:
+                temp_var4 = [1, value, value**2, math.pow(value, 3)]
                 if j == 1:
                     # calculate x coords
                     x_u.append(float(np.dot(temp_var4, temp_var_coord)))
@@ -98,7 +99,7 @@ class NURBS(ParametricFoil):
 
             temp_var_coord = np.dot(temp_var1, temp_var)
             for value in u:
-                temp_var4 = [1, value, value**2, pow(value, 3)]
+                temp_var4 = [1, value, value**2, math.pow(value, 3)]
                 if j == 1:
                     # calculate x coords
                     x_l.append(float(np.dot(temp_var4, temp_var_coord)))

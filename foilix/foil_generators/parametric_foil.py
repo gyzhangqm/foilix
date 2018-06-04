@@ -59,7 +59,7 @@ class ParametricFoil(object):
         raise NotImplementedError
 
     @abstractmethod
-    def _fn_upper_lower(self, x):
+    def _fn_upper_lower(self, xpts):
         r"""Implements proper coordinate calculation,
         using camberline direction"""
         raise NotImplementedError
@@ -73,7 +73,8 @@ class ParametricFoil(object):
         the value should be the same as the nominal thickness.
 
         """
-        x_l, y_l, x_u, y_u = self.get_coords()[:4]
+        # x_l, y_l, x_u, y_u = self.get_coords()[:4]
+        _, y_l, _, y_u = self.get_coords()[:4]
         # return y_u.max() - y_l.min()
         return max(y_u) - min(y_l)
 

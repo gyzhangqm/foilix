@@ -61,11 +61,13 @@ def section_analysis_example(foils_to_analyze):
         #                                  reynolds_number,
         #                                  ncrit,
         # iterlim=100)
-        polar = Polar(dat_file,
-                      angles_of_attack,
-                      reynolds_number,
-                      ncrit,
-                      iterlim=100)
+        polar = Polar(foil_data_folder="../../foil_data",
+                      filename=dat_file,
+                      angles_of_attack_spec=angles_of_attack,
+                      reynolds_number=reynolds_number,
+                      ncrit=ncrit,
+                      iterlim=100,
+                      use_precomputed_data=True)
         polar.compute()
 
         print("Max L/D : %f @ %f°" % (polar.max_lift_to_drag[0],

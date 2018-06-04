@@ -36,6 +36,8 @@ class Polar(object):
 
     Parameters
     ----------
+    foil_data_folder : str
+        Path to the foil data folder (precomputed data)
     filename : String
         The name of the .dat file containing the airfoil coordinates
     angles_of_attack_spec : list of 3 floats [start, stop, interval]
@@ -163,7 +165,11 @@ class Polar(object):
         list
 
         """
-        assert self.computed is True
+        # assert self.computed is True
+        if self.computed is False:
+            msg = "The Polar should have been computed before calling warnings"
+            logger.error(msg)
+            raise AssertionError(msg)
         return [w.encode().strip() for w in self._warnings]
 
     # def append_warning(self, message):
@@ -186,7 +192,12 @@ class Polar(object):
     @property
     def angles_of_attack_computed(self):
         r"""Angles of attack that have been computed"""
-        assert self.computed is True
+        # assert self.computed is True
+        if self.computed is False:
+            msg = "The Polar should have been computed before " \
+                  "calling angles_of_attack_computed"
+            logger.error(msg)
+            raise AssertionError(msg)
         return self._data_array[:, 0]
 
     @property
@@ -199,7 +210,12 @@ class Polar(object):
         self.angles_of_attack
 
         """
-        assert self.computed is True
+        # assert self.computed is True
+        if self.computed is False:
+            msg = "The Polar should have been computed before " \
+                  "calling coefficients_of_lift"
+            logger.error(msg)
+            raise AssertionError(msg)
         return self._data_array[:, 1]
 
     @property
@@ -225,7 +241,12 @@ class Polar(object):
         in the same order as self.angles_of_attack
 
         """
-        assert self.computed is True
+        # assert self.computed is True
+        if self.computed is False:
+            msg = "The Polar should have been computed before " \
+                  "calling coefficients_of_drag"
+            logger.error(msg)
+            raise AssertionError(msg)
         return self._data_array[:, 2]
 
     @property
@@ -374,8 +395,8 @@ class PolarMatrix(object):
         accumulator_value = 0
         accumulator_angle = 0
         count = 0
-        for i, rn in enumerate(self._reynolds_numbers):
-            for j, nc in enumerate(self._ncrits):
+        for i, _ in enumerate(self._reynolds_numbers):
+            for j, _ in enumerate(self._ncrits):
                 accumulator_value += self.matrix[i][j].maximum_lift[0]
                 accumulator_angle += self.matrix[i][j].maximum_lift[1]
                 count += 1

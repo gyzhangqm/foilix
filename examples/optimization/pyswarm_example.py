@@ -63,26 +63,26 @@ print('  Deflection   <= 0.25 inches')
 
 def weight(x, *args):
     H, d, t = x  # all in inches
-    B, rho, E, P = args
+    B, rho, _, P = args
     return rho * 2 * np.pi * d * t * np.sqrt((B/2)**2 + H**2)
 
 
 def stress(x, *args):
     H, d, t = x  # all in inches
     B, rho, E, P = args
-    return (P*np.sqrt((B/2)**2 + H**2))/(2*t*np.pi*d*H)
+    return (P * np.sqrt((B / 2)**2 + H**2)) / (2 * t *np.pi * d * H)
 
 
 def buckling_stress(x, *args):
     H, d, t = x  # all in inches
     B, rho, E, P = args
-    return (np.pi**2*E*(d**2 + t**2))/(8*((B/2)**2 + H**2))
+    return (np.pi**2 * E * (d**2 + t**2)) / (8 * ((B / 2)**2 + H**2))
 
 
 def deflection(x, *args):
     H, d, t = x  # all in inches
     B, rho, E, P = args
-    return (P*np.sqrt((B/2)**2 + H**2)**3)/(2*t*np.pi*d*H**2*E)
+    return (P * np.sqrt((B/2)**2 + H**2)**3) / (2 * t * np.pi * d * H**2 * E)
 
 
 def mycons(x, *args):

@@ -10,7 +10,7 @@ WORK IN PROGRESS
 from __future__ import print_function
 
 from openmdao.api import IndepVarComp, Component, Problem, Group, \
-    Driver, ScipyOptimizer, ExecComp
+    ScipyOptimizer, ExecComp
 
 
 class Foil(Component):

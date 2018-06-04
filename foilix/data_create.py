@@ -6,7 +6,7 @@ import numpy as np
 
 from corelib.core.files import p_
 from corelib.core.timeout import timeout
-from corelib.core.profiling import timeit
+# from corelib.core.profiling import timeit
 
 from foilix.xfoil.xfoil import oper_visc_alpha
 
@@ -75,14 +75,14 @@ def create_data(foil_id,
                                        aoas,
                                        iterlim=iterlim)
 
-                    for i, aoa in enumerate(
+                    for _, aoa in enumerate(
                             np.arange(aoas[0],
                                       aoas[1] + aoas[2] / 2.,
                                       aoas[2])):
                         # is the answer in results?
                         record = [r for r in results if r[0] == aoa]
                         if len(record) == 1:
-                            a, cl, cd, cdp, cm, top_xtr, bot_xtr, warnings = \
+                            _, cl, cd, cdp, cm, top_xtr, bot_xtr, warnings = \
                                 record[0]
                             # Goal of the following lines is to replace a
                             # warning with spaces by a warning without spaces
@@ -177,7 +177,7 @@ def create_data(foil_id,
 @timeout(60)
 def get_data(foil_id, ncrit, reynolds, mach, aoas, iterlim=200):
     r"""
-    
+
     Parameters
     ----------
     foil_id : str
@@ -199,14 +199,13 @@ def get_data(foil_id, ncrit, reynolds, mach, aoas, iterlim=200):
     list of tuples : [(alpha, cl, cd, cdp, cm, top_xtr, bot_xtr, warnings), ...]
 
     """
-    data_array, data_header, infodict, warnings = \
-        oper_visc_alpha("../foil_dat/%s.dat" % foil_id,
-                        aoas,
-                        reynolds,
-                        mach=mach,
-                        iterlim=iterlim,
-                        show_seconds=None,
-                        n_crit=ncrit)
+    data_array, _, _, warnings = oper_visc_alpha("../foil_dat/%s.dat" % foil_id,
+                                                 aoas,
+                                                 reynolds,
+                                                 mach=mach,
+                                                 iterlim=iterlim,
+                                                 show_seconds=None,
+                                                 n_crit=ncrit)
     results = []
 
     for d in data_array:

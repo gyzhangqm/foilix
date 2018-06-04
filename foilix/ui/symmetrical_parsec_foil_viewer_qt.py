@@ -139,17 +139,17 @@ class ParsecFoilViewerApp(QtWidgets.QWidget):
 
         self.button = QtWidgets.QPushButton('Toggle scale')
 
-        k = {'rle': self.le_radius_lsv.numeric_value(),
-             'x_pre': self.max_thickness_x_lsv.numeric_value() / 100,
-             'y_pre': -self.thickness_lsv.numeric_value()/100./2.,
-             'd2ydx2_pre': self.curvature_at_max_thickness_lsv.numeric_value(),
-             'th_pre': self.te_angle_lsv.numeric_value(),
-             'x_suc': self.max_thickness_x_lsv.numeric_value() / 100,
-             'y_suc': self.thickness_lsv.numeric_value()/100./2.,
-             'd2ydx2_suc': -self.curvature_at_max_thickness_lsv.numeric_value(),
-             'th_suc': -self.te_angle_lsv.numeric_value(),
-             'xte': 1.,
-             'yte': 0.}
+        # k = {'rle': self.le_radius_lsv.numeric_value(),
+        #      'x_pre': self.max_thickness_x_lsv.numeric_value() / 100,
+        #      'y_pre': -self.thickness_lsv.numeric_value()/100./2.,
+        #      'd2ydx2_pre': self.curvature_at_max_thickness_lsv.numeric_value(),
+        #      'th_pre': self.te_angle_lsv.numeric_value(),
+        #      'x_suc': self.max_thickness_x_lsv.numeric_value() / 100,
+        #      'y_suc': self.thickness_lsv.numeric_value()/100./2.,
+        #      'd2ydx2_suc': -self.curvature_at_max_thickness_lsv.numeric_value(),
+        #      'th_suc': -self.te_angle_lsv.numeric_value(),
+        #      'xte': 1.,
+        #      'yte': 0.}
 
         self.pw = pg.PlotWidget()
         self.pw.setAspectLocked()

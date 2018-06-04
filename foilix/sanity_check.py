@@ -4,7 +4,6 @@
 r"""Detect files that contain less points than a threshold to define sections"""
 
 import logging
-import os
 import re
 
 from foilix.filters import symmetrical_dat_files

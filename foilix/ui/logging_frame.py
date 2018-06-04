@@ -26,7 +26,7 @@ class LoggingFrame(wx.Frame, Observer):
         self.log_window.Show()
         self.Bind(wx.EVT_CLOSE, self._on_close)
 
-    def update(self, message, n, i_par, pts, score):
+    def update(self, message, n, i_par, pts, score, foil_parameterization_type):
         r"""
 
         Parameters
@@ -38,20 +38,24 @@ class LoggingFrame(wx.Frame, Observer):
         pts : str
             String representation of a pso position
         score : float
+        foil_parameterization_type : str
 
         """
-        message = "%s - %i - %i - %s - %f" % (message,
-                                              n,
-                                              i_par,
-                                              str(pts),
-                                              1./score)
+        message = "%s - %i - %i - %s - %f - %s" % (message,
+                                                   n,
+                                                   i_par,
+                                                   str(pts),
+                                                   1. / score,
+                                                   foil_parameterization_type)
         self.log_window.AppendText(message + "\n")
         # wx.CallAfter(self.add_text, message)
 
     def _on_close(self, event):
-        self.log_window.this.disown()
+        # self.log_window.this.disown()
         wx.Log.SetActiveTarget(None)
         event.Skip()
+        self.Destroy()
+        sys.exit(0)
 
 
 class NewLoggingFrame(wx.Frame, Observer):
@@ -129,7 +133,7 @@ class NewLoggingFrame(wx.Frame, Observer):
         # self.log_window.Show()
         self.Bind(wx.EVT_CLOSE, self._on_close)
 
-    def update(self, message, n, i_par, pts, score, parameterization_type):
+    def update(self, message, n, i_par, pts, score, foil_parameterization_type):
         r"""
 
         Parameters
@@ -141,7 +145,7 @@ class NewLoggingFrame(wx.Frame, Observer):
         pts : str
             String representation of a pso position
         score : float
-        parameterization_type : str
+        foil_parameterization_type : str
 
         """
         item = self.ultimate_list.InsertStringItem(self.nb_records, message)
@@ -158,7 +162,7 @@ class NewLoggingFrame(wx.Frame, Observer):
         self.ultimate_list.SetStringItem(self.nb_records, 4, str(score))
         self.ultimate_list.SetStringItem(self.nb_records, 5, str(1/score))
 
-        if parameterization_type == "SYM_PARSEC":
+        if foil_parameterization_type == "SYM_PARSEC":
             from foilix.foil_generators.parsec import PARSEC
             k = dict()
             k['rle'] = pts[1]
@@ -183,7 +187,7 @@ class NewLoggingFrame(wx.Frame, Observer):
             self.ultimate_list.SetStringItem(self.nb_records,
                                              7,
                                              str(k['x_pre']))
-        elif parameterization_type == "SYM_NURBS":
+        elif foil_parameterization_type == "SYM_NURBS":
             from foilix.foil_generators.nurbs import NURBS
             ta = pts[0]
             tb = pts[1]
@@ -198,12 +202,13 @@ class NewLoggingFrame(wx.Frame, Observer):
             self.ultimate_list.SetStringItem(self.nb_records,
                                              6,
                                              str(foil.max_thickness()))
-            x_l, y_l, x_u, y_u, = foil.get_coords()
+            # x_l, y_l, x_u, y_u, = foil.get_coords()
+            _, _, x_u, y_u, = foil.get_coords()
             self.ultimate_list.SetStringItem(self.nb_records,
                                              7,
                                              str(x_u[y_u.tolist().index(max(y_u))]))
-        elif parameterization_type == "NURBS" \
-                or parameterization_type == "SYM_PARSEC":
+        elif foil_parameterization_type == "NURBS" \
+                or foil_parameterization_type == "SYM_PARSEC":
             raise NotImplementedError
 
         self.nb_records += 1
