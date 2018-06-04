@@ -4,7 +4,7 @@ MAINTAINER Guillaume Florent <florentsailing@gmail.com>
 
 RUN apt-get update && apt-get install -y libgtk2.0-0 libxxf86vm1 libgl1-mesa-dev libx11-xcb1 && rm -rf /var/lib/apt/lists/*
 
-RUN conda install -y numpy scipy matplotlib pyqtgraph wxpython pyqt atom configobj pytest
+RUN conda install -y numpy scipy matplotlib pandas pyqtgraph wxpython pyqt atom configobj pytest
 RUN conda install -y -c gflorent corelib hydro libra
 
 # foilix
