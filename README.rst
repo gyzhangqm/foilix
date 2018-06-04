@@ -1,12 +1,10 @@
 Foilix
 ======
 
-.. image:: https://travis-ci.org/floatingpointstack/foilix.svg
-    :alt: build status
-.. image:: https://coveralls.io/repos/floatingpointstack/foilix/badge.svg?branch=master&service=github
-    :alt: code coverage
-.. image:: http://img.shields.io/badge/license-GPL v3-blue.svg
-    :alt: GPL v3
+.. image:: https://travis-ci.org/guillaume-florent/foilix.svg?branch=master
+    :target: https://travis-ci.org/guillaume-florent/foilix
+.. image:: https://api.codacy.com/project/badge/Grade/5af705e42e5749a8b86faa0bf5c69a4e
+    :target: https://www.codacy.com/app/guillaume-florent/foilix?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=guillaume-florent/foilix&amp;utm_campaign=Badge_Grade
 
 **foilix** is a set of python programs to analyze and optimize 2D foil sections. **foilix** uses Xfoil_ to determine the 2D foil section behaviour for a specific operating range.
 
