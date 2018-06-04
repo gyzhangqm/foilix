@@ -30,7 +30,7 @@ def create_data(foil_id,
                 iterlim=200,
                 formats=None):
     r"""Create the files containing the data
-    
+
     Parameters
     ----------
     foil_id : str

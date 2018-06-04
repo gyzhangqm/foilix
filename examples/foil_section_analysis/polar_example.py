@@ -11,7 +11,12 @@ from foilix.xfoil.polar import Polar
 reynolds_number = [2.5e4, 3.5e4, 3.5e4, 4.5e4]
 ncrits = [2.5, 3.]
 
-polar = Polar("../../foil_dat/gf_0001.dat", [0, 7, 1], 2.5e4, 3.)
+polar = Polar(foil_data_folder="../../foil_data",
+              filename="gf_0001.dat",
+              angles_of_attack_spec=[0, 7, 1],
+              reynolds_number=2.5e4,
+              ncrit=3.,
+              use_precomputed_data=True)
 polar.compute()
 
 print("--interp_aoas--")

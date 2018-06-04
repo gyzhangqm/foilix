@@ -46,12 +46,12 @@ def sort_foils_folder(foil_data_folder):
     return foils_symmetrical, foils_unsymmetrical
 
 
-def symmetrical_dat_files(foil_data_folder):
+def symmetrical_dat_files(foil_dat_folder):
     r"""Return a list of symmetrical dat files
 
     Parameters
     ----------
-    foil_data_folder : str
+    foil_dat_folder : str
         The path to the folder containing the 2d section dat files
 
     Returns
@@ -61,11 +61,11 @@ def symmetrical_dat_files(foil_data_folder):
 
     """
 
-    logger.info("Listing symmetrical .dat files in %s" % foil_data_folder)
+    logger.info("Listing symmetrical .dat files in %s" % foil_dat_folder)
 
     # list of files with the .dat extension in the foil_data folder
-    section_2d_files = [os.path.join(foil_data_folder, f)
-                        for f in os.listdir(foil_data_folder)
+    section_2d_files = [os.path.join(foil_dat_folder, f)
+                        for f in os.listdir(foil_dat_folder)
                         if re.match(r".*\.dat", f)]
     logger.debug("%i section_2d_files" % len(section_2d_files))
 
@@ -74,7 +74,7 @@ def symmetrical_dat_files(foil_data_folder):
                               if Foil.from_dat_file(f).is_symmetrical() is True]
 
     logger.info("Found %i symmetrical files in %s" %
-                (len(_symmetrical_dat_files), foil_data_folder))
+                (len(_symmetrical_dat_files), foil_dat_folder))
 
     return _symmetrical_dat_files
 

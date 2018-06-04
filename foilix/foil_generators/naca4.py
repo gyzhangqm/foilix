@@ -66,7 +66,7 @@ class NACA4(ParametricFoil):
 
         Returns
         -------
-        boolean : True for a symmetrical section, False for an 
+        boolean : True for a symmetrical section, False for an
         assymetrical section
 
         """

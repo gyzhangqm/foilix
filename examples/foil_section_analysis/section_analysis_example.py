@@ -27,8 +27,8 @@ def section_analysis_example(foils_to_analyze):
     foils_to_analyze : list[str]
 
     """
-    MATPLOTLIBRC = os.path.join(os.path.dirname(__file__),
-                                'matplotlibrc_defaults')
+    # MATPLOTLIBRC = os.path.join(os.path.dirname(__file__),
+    #                             'matplotlibrc_defaults')
     WORKING_DIRECTORY = os.path.join(os.path.dirname(__file__),
                                      '../../foilix/xfoil')
     XFOIL_EXE_TO_DAT_RELPATH = '../../foil_dat/%s'
@@ -47,7 +47,7 @@ def section_analysis_example(foils_to_analyze):
 
     foils_dat_files = [XFOIL_EXE_TO_DAT_RELPATH % f for f in foils_to_analyze]
 
-    f, axarr = plt.subplots(2, 2)
+    _, axarr = plt.subplots(2, 2)
     axarr[-1, -1].axis('off')  # hide bottom right subplot that is not used
     axarr[0, 0].set_title("Cl, Cd = f(angle)")
     axarr[0, 1].set_title("Cl = f(Cd)")

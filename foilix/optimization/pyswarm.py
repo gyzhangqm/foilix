@@ -29,7 +29,7 @@ def _cons_f_ieqcons_wrapper(f_ieqcons, args, kwargs, x):
 def pso(func,
         lb,
         ub,
-        ieqcons=[],
+        ieqcons=None,
         f_ieqcons=None,
         args=(),
         kwargs={},
@@ -109,12 +109,25 @@ def pso(func,
         The objective values at each position in p
 
     """
+    if ieqcons is None:
+        ieqcons = []
 
-    assert len(lb) == len(ub), 'Lower- and upper-bounds must be the same length'
-    assert hasattr(func, '__call__'), 'Invalid function handle'
+    # assert len(lb) == len(ub),
+    #                          'Lower- and upper-bounds must be the same length'
+    if len(lb) != len(ub):
+        msg = 'Lower- and upper-bounds must be the same length'
+        raise ValueError(msg)
+    # assert hasattr(func, '__call__'), 'Invalid function handle'
+    if not hasattr(func, '__call__'):
+        msg = 'Invalid function handle'
+        raise ValueError(msg)
     lb = np.array(lb)
     ub = np.array(ub)
-    assert np.all(ub > lb), 'All upper-bound values must be greater than lower-bound values'
+    # assert np.all(ub > lb),
+    #           'All upper-bound values must be greater than lower-bound values'
+    if not np.all(ub > lb):
+        msg = 'All upper-bound values must be greater than lower-bound values'
+        raise ValueError(msg)
 
     vhigh = np.abs(ub - lb)
     vlow = -vhigh

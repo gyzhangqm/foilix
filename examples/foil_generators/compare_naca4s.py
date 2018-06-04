@@ -5,8 +5,6 @@ r"""Compare the same NACA4 from a dat file and from the generator"""
 
 from __future__ import print_function
 
-import os
-
 from corelib.core.files import p_
 
 from foilix.foil import Foil

@@ -7,7 +7,7 @@ from configobj import ConfigObj
 
 def read_config(path):
     r"""Read the config file
-    
+
     Parameters
     ----------
     path : str
@@ -46,4 +46,4 @@ def read_config(path):
     return config
 
 if __name__ == "__main__":
-    print(read_config("foilix_case.conf"))
+    print(read_config("../examples/sample_case/foilix_case.conf"))

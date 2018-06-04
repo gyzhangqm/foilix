@@ -16,7 +16,7 @@ the Xfoil class multiple times.
 
 As such, this is probably the fastest and most versatile XFOIL automation
 script out there.
-(I've seen a good MATLAB implementation, but it still relied on files for 
+(I've seen a good MATLAB implementation, but it still relied on files for
 output, and was not interactive.)
 
 """
@@ -107,7 +107,7 @@ def _oper_visc(pcmd,
                iterlim=None,
                gen_naca=False,
                n_crit=9.0):
-    r"""Convenience function that returns polar for specified airfoil and 
+    r"""Convenience function that returns polar for specified airfoil and
     Reynolds number for (range of) alpha or cl.
     Waits on XFOIL to finish so is blocking.
 

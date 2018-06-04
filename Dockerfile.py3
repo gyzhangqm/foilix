@@ -2,7 +2,7 @@ FROM continuumio/miniconda3:4.4.10
 
 MAINTAINER Guillaume Florent <florentsailing@gmail.com>
 
-RUN conda install -y numpy scipy matplotlib pyqtgraph wxpython pyqt atom pytest
+RUN conda install -y numpy scipy matplotlib pyqtgraph wxpython pyqt atom configobj pytest
 RUN conda install -y -c gflorent corelib hydro libra
 
 # foilix

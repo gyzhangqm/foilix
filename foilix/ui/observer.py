@@ -19,7 +19,10 @@ class Observable(object):
         o : subclass of Observer
 
         """
-        assert isinstance(o, Observer)
+        # assert isinstance(o, Observer)
+        if not isinstance(o, Observer):
+            msg = "Cannot add an observer that is not an instance of Observer"
+            raise ValueError(msg)
         self.observers.append(o)
 
     def notify_observers(self,

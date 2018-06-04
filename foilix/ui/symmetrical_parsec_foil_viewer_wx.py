@@ -5,7 +5,6 @@ r"""wx based parsec foil and dat foil file viewer"""
 
 import sys
 
-import os
 import logging
 
 import numpy as np

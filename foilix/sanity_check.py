@@ -12,19 +12,20 @@ from foilix.filters import symmetrical_dat_files
 logger = logging.getLogger(__name__)
 
 
-def sanity_check(nb_points_threshold=60):
+def sanity_check(foil_dat_folder, nb_points_threshold=60):
     r"""
-    
+
     Parameters
     ----------
-    nb_points_threshold
+    foil_dat_folder : str
+    nb_points_threshold : int
 
     Returns
     -------
 
     """
     i = 0
-    sdat = symmetrical_dat_files(foil_data_folder=os.environ["FOIL_DATA_FOLDER"])
+    sdat = symmetrical_dat_files(foil_dat_folder=foil_dat_folder)
     for f in sdat:
         valid_lines = 0
         with open(f) as f_:
@@ -53,4 +54,4 @@ if __name__ == "__main__":
                         format='%(asctime)s :: %(levelname)6s :: %(module)20s '
                                ':: %(lineno)3d :: %(message)s')
 
-    sanity_check(nb_points_threshold=60)
+    sanity_check("../foil_dat", nb_points_threshold=60)

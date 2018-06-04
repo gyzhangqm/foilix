@@ -144,7 +144,12 @@ class Polar(object):
         101 seems to be a good compromise
 
         """
-        assert self.computed is True
+        # assert self.computed is True
+        if self.computed is False:
+            msg = "The Polar should have been computed before " \
+                  "calling interp_aoas"
+            logger.error(msg)
+            raise AssertionError(msg)
         return np.linspace(np.min(self.angles_of_attack_computed),
                            np.max(self.angles_of_attack_computed),
                            num=101)
@@ -190,7 +195,7 @@ class Polar(object):
 
         Returns
         -------
-        A list of coefficients of lift in the same order as 
+        A list of coefficients of lift in the same order as
         self.angles_of_attack
 
         """

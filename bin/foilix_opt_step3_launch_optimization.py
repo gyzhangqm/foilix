@@ -9,7 +9,7 @@ as a starting point
 """
 
 from os import getcwd, mkdir
-from os.path import join, dirname, isdir
+from os.path import join, isdir
 import logging
 import time
 from argparse import ArgumentParser

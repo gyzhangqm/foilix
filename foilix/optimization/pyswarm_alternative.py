@@ -80,16 +80,26 @@ def pso(func, lb, ub, ieqcons=[], f_ieqcons=None, args=(), kwargs={},
         The objective value at ``g``
 
     This is from https://github.com/tisimst/pyswarm/ on 02-Feb-2015.
-    Vectorisation & additional tweaks by DM. Note this version has not 
+    Vectorisation & additional tweaks by DM. Note this version has not
     been extensively tested.
 
     """
-
-    assert len(lb) == len(ub), 'Lower- and upper-bounds must be the same length'
-    assert hasattr(func, '__call__'), 'Invalid function handle'
+    # assert len(lb) == len(ub),
+    #                          'Lower- and upper-bounds must be the same length'
+    if len(lb) != len(ub):
+        msg = 'Lower- and upper-bounds must be the same length'
+        raise ValueError(msg)
+    # assert hasattr(func, '__call__'), 'Invalid function handle'
+    if not hasattr(func, '__call__'):
+        msg = 'Invalid function handle'
+        raise ValueError(msg)
     lb = np.array(lb)[np.newaxis, :]
     ub = np.array(ub)[np.newaxis, :]
-    assert np.all(ub > lb), 'All upper-bound values must be greater than lower-bound values'
+    # assert np.all(ub > lb),
+    #           'All upper-bound values must be greater than lower-bound values'
+    if not np.all(ub > lb):
+        msg = "All upper-bound values must be greater than lower-bound values"
+        raise ValueError(msg)
 
     vhigh = np.abs(ub - lb)
     vlow = -vhigh

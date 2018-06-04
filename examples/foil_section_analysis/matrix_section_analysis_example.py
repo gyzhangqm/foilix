@@ -44,11 +44,13 @@ def matrix_section_analysis_example():
     #                   naca0006: Max thickness 6% at 30% chord.)
     foils_dat_files = [XFOIL_EXE_TO_DAT_RELPATH % f for f in ['naca0006.dat']]
 
-    polar_matrix = PolarMatrix(foils_dat_files[0],
-                               angles_of_attack,
-                               reynolds_numbers,
-                               ncrits,
-                               iterlim=100)
+    polar_matrix = PolarMatrix(foil_data_folder="../../foil_data",
+                               filename=os.path.basename(foils_dat_files[0]),
+                               angles_of_attack_spec=angles_of_attack,
+                               reynolds_numbers=reynolds_numbers,
+                               ncrits=ncrits,
+                               iterlim=100,
+                               use_precomputed_data=True)
     polar_matrix.compute()
 
     print("Avg Max L/D : %f @ %f°" % (polar_matrix.avg_max_lift_to_drag[0],

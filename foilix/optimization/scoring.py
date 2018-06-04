@@ -3,7 +3,7 @@
 r"""Scoring logic for PSO algorithms
 
 The code (e.g. FoilSectionScorer) deals with 2d foil sections scoring
-but it could be anything else as long as it subclasses the Scorer 
+but it could be anything else as long as it subclasses the Scorer
 abstract base class
 
 """
@@ -89,35 +89,84 @@ class CompoundScoreSectionScorer(Scorer):
                  min_drag_weight=1.,
                  max_lift_to_drag_weight=1.):
         # thickness
-        assert thickness > 0.
-        assert thickness <= 0.3
+        # assert thickness > 0.
+        if thickness <= 0.:
+            msg = "thickness should be strictly positive"
+            raise ValueError(msg)
+        # assert thickness <= 0.3
+        if thickness > 0.3:
+            msg = "A thickness greater than 0.3 is not realistic"
+            raise ValueError(msg)
 
         # angle of attack checks
         start, end, step = angles_of_attack
-        assert start >= 0
-        assert start < end
-        assert step > 0.
-        assert step < end - start
+        # assert start >= 0
+        if start < 0:
+            msg = "start aoa value should be positive or zero"
+            raise ValueError(msg)
+        # assert start < end
+        if start >= end:
+            msg = "start aoa should be strictly less than end aoa"
+            raise ValueError(msg)
+        # assert step > 0.
+        if step <= 0.:
+            msg = "aoa step should be strictly positive"
+            raise ValueError(msg)
+        # assert step < end - start
+        if step >= end - start:
+            msg = "aoa step should be strictly less than the difference " \
+                  "between aoa end and aos start"
+            raise ValueError(msg)
 
         # reynolds checks
         for r in reynolds:
-            assert r > 0
+            # assert r > 0
+            if r <= 0:
+                msg = "One of the Reynolds numbers is not strictly positive"
+                raise ValueError(msg)
 
         # ncrit checks
         for ncrit in ncrits:
-            assert ncrit > 0.
-            assert ncrit < 20.
+            # assert ncrit > 0.
+            if ncrit <= 0.:
+                msg = "One of the ncrits is not strictly positive"
+                raise ValueError(msg)
+            # assert ncrit < 20.
+            if ncrit >= 20.:
+                msg = "One of the ncrits is not realistic"
+                raise ValueError(msg)
 
         # iterlim checks
-        assert iterlim > 0 and type(iterlim) is int
+        # assert iterlim > 0 and type(iterlim) is int
+        if not (iterlim > 0 and type(iterlim) is int):
+            msg = "iterlim should be a strictly positive integer"
+            raise ValueError(msg)
 
         # scoring scaling factors ans weights checks
-        assert max_lift_scaling >= 0.0
-        assert inv_min_drag_scaling >= 0.0
-        assert max_lift_to_drag_scaling >= 0.0
-        assert max_lift_weight >= 0.0
-        assert min_drag_weight >= 0.0
-        assert max_lift_to_drag_weight >= 0.0
+        # assert max_lift_scaling >= 0.0
+        if max_lift_scaling < 0.:
+            msg = "max_lift_scaling should be positive or zero"
+            raise ValueError(msg)
+        # assert inv_min_drag_scaling >= 0.0
+        if inv_min_drag_scaling < 0.:
+            msg = "inv_min_drag_scaling should be positive or zero"
+            raise ValueError(msg)
+        # assert max_lift_to_drag_scaling >= 0.0
+        if max_lift_to_drag_scaling < 0.:
+            msg = "max_lift_to_drag_scaling should be positive or zero"
+            raise ValueError(msg)
+        # assert max_lift_weight >= 0.0
+        if max_lift_weight < 0.:
+            msg = "max_lift_weight should be positive or zero"
+            raise ValueError(msg)
+        # assert min_drag_weight >= 0.0
+        if min_drag_weight < 0.:
+            msg = "min_drag_weight should be positive or zero"
+            raise ValueError(msg)
+        # assert max_lift_to_drag_weight >= 0.0
+        if max_lift_to_drag_weight < 0.:
+            msg = "max_lift_to_drag_weight should be positive or zero"
+            raise ValueError(msg)
 
         self.thickness = thickness
 
@@ -177,7 +226,11 @@ class CompoundScoreSectionScorer(Scorer):
         float or None
 
         """
-        assert len(pts) == 4
+        # assert len(pts) == 4
+        if len(pts) != 4:
+            msg = "Expected 4 PARSEC parameters, found %i" % len(pts)
+            logger.error(msg)
+            raise ValueError(msg)
 
         foil = self.construct_symmetrical_airfoil(pts)
 
@@ -283,25 +336,53 @@ class YachtAppendageSectionScorer(Scorer):
 
         # angle of attack checks
         start, end, step = angles_of_attack
-        assert start >= 0
-        assert start < end
-        assert step > 0.
-        assert step < end - start
+        # assert start >= 0
+        if start < 0:
+            msg = "start aoa value should be positive or zero"
+            raise ValueError(msg)
+        # assert start < end
+        if start >= end:
+            msg = "start aoa should be strictly less than end aoa"
+            raise ValueError(msg)
+        # assert step > 0.
+        if step <= 0.:
+            msg = "aoa step should be strictly positive"
+            raise ValueError(msg)
+        # assert step < end - start
+        if step >= end - start:
+            msg = "aoa step should be strictly less than the difference " \
+                  "between aoa end and aos start"
+            raise ValueError(msg)
 
         # reynolds checks
         for r in reynolds:
-            assert r > 0
+            # assert r > 0
+            if r <= 0:
+                msg = "One of the Reynolds numbers is not strictly positive"
+                raise ValueError(msg)
 
         # ncrit checks
         for ncrit in ncrits:
-            assert ncrit > 0.
-            assert ncrit < 20.
+            # assert ncrit > 0.
+            if ncrit <= 0.:
+                msg = "One of the ncrits is not strictly positive"
+                raise ValueError(msg)
+            # assert ncrit < 20.
+            if ncrit >= 20.:
+                msg = "One of the ncrits is not realistic"
+                raise ValueError(msg)
 
         # iterlim checks
-        assert iterlim > 0 and type(iterlim) is int
+        # assert iterlim > 0 and type(iterlim) is int
+        if not (iterlim > 0 and type(iterlim) is int):
+            msg = "iterlim should be a strictly positive integer"
+            raise ValueError(msg)
 
         # scoring scaling factors ans weights checks
-        assert inv_min_drag_scaling >= 0.0
+        # assert inv_min_drag_scaling >= 0.0
+        if inv_min_drag_scaling < 0.:
+            msg = "inv_min_drag_scaling should be positive or zero"
+            raise ValueError(msg)
 
         self.angles_of_attack = angles_of_attack
         self.aoa_ld = aoa_ld

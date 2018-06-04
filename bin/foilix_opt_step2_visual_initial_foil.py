@@ -4,7 +4,7 @@
 r"""Step 2 of the optimization procedure :
 - find the parameters of a nurbs foil that are close to the best foils
   from the database
-- the parameters are saved (to the 'save_on_close' parameter of the 
+- the parameters are saved (to the 'save_on_close' parameter of the
   NurbsFoilViewerFrame constructor) when the viewer is closed
 
 """

@@ -26,7 +26,7 @@ class ParametricFoil(object):
     2. Define _camberline and _thickness, which calculate the coordinates
        of camberline and thickness, respectively.
 
-    With the second method, ParametricFoil._fn_upper 
+    With the second method, ParametricFoil._fn_upper
                         and ParametricFoil._fn_lower are left to do their job,
     which is to nicely join the camberline and thickness, taking into account
     the camberline's direction,
@@ -63,7 +63,7 @@ class ParametricFoil(object):
         r"""Implements proper coordinate calculation,
         using camberline direction"""
         raise NotImplementedError
-    
+
     def max_thickness(self):
         r"""Compute maximum thickness of foil, taking camber into account
 

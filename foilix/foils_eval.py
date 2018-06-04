@@ -6,7 +6,7 @@ from __future__ import absolute_import, print_function, division
 
 import logging
 import os
-import re
+# import re
 import time
 import multiprocessing
 import numpy as np

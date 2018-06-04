@@ -13,15 +13,17 @@ from foilix.optimization.scoring import compound_score
 
 def scoring_example():
     r"""Runs the example"""
-    XFOIL_EXE_TO_DAT_RELPATH = '../../foil_dat/%s'
+    # XFOIL_EXE_TO_DAT_RELPATH = '../../foil_dat/%s'
 
     # Define an XFoilPilot over a list of Reynolds
     # and for a range of angles of attack
-    polar_matrix = PolarMatrix(XFOIL_EXE_TO_DAT_RELPATH % "s1010.dat",
-                               [0, 20, 0.5],
-                               [5E4, 1E5],
+    polar_matrix = PolarMatrix(foil_data_folder="../../foil_data",
+                               filename="s1010.dat",
+                               angles_of_attack_spec=[0, 15, 0.5],
+                               reynolds_numbers=[5E4, 1E5],
                                ncrits=[2.0],
-                               iterlim=500)
+                               iterlim=500,
+                               use_precomputed_data=True)
     polar_matrix.compute()
 
     print("Score : %f" % compound_score(polar_matrix.avg_max_lift[0],

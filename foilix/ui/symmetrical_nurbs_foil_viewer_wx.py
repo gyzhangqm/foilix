@@ -3,9 +3,8 @@
 
 r"""wx based nurbs foil and dat foil file viewer"""
 
-import os
 import logging
-
+import sys
 import numpy as np
 
 import wx
@@ -14,8 +13,6 @@ import wx.lib.agw.aui
 
 import matplotlib
 matplotlib.use('wx')
-
-import sys
 
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavigationToolbar

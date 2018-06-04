@@ -3,7 +3,7 @@
 
 r"""Repanel the symmetrical dat files in foil_dat with 281 points
 
-The repanelled section are stored in a file with __p__281 
+The repanelled section are stored in a file with __p__281
 appended to the file name:
 *.dat -> *__p__281.dat
 
@@ -32,14 +32,19 @@ def repanel(datfile_name, nb_panels):
     nb_panels : int
         The number of definition points
 
-    Returns
-    -------
+    Raises
+    ------
+    ValueError is datfile_name is not a valid file name
 
     """
     xfoil_exe_dir = os.path.join(os.path.dirname(__file__),
                                  "../../foilix/xfoil")
     # assert os.path.isfile(os.path.join(xfoil_exe_dir, "xfoil.exe"))
-    assert os.path.isfile(datfile_name)
+    # assert os.path.isfile(datfile_name)
+    if not os.path.isfile(datfile_name):
+        msg = "%s is not a file" % datfile_name
+        logger.error(msg)
+        raise ValueError(msg)
     # os.chdir(xfoil_exe_dir)
     with Xfoil(xfoil_exe_dir) as xf:
         logger.debug("Loading : %s" % datfile_name)

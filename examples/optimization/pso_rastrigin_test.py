@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 def rastrigin_nd_randnone(*xi):
-    r"""Simulates airfoils that don't converge 
+    r"""Simulates airfoils that don't converge
     in Xfoil by randomly returning None"""
     # Return None 20% of the time
     if np.random.rand() > .8:
@@ -28,7 +28,7 @@ def rastrigin_nd_randnone(*xi):
 
 
 def rastrigin_nd(*xi):
-    r"""n-dimensional rastrigin function. Every argument should be a 
+    r"""n-dimensional rastrigin function. Every argument should be a
     single value or meshgrid, and is another dimension.
     """
     return 10 * len(xi) + np.sum(a**2 - (10 * np.cos(2 * np.pi * a)) for a in xi)

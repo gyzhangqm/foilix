@@ -41,7 +41,7 @@ class PARSEC(foilix.foil_generators.parametric_foil.ParametricFoil):
             x_suc:      suction surface crest location x
             y_suc:      suction surface crest location y
             d2ydx2_suc: curvature at the suction surface crest location
-            th_suc:     trailing edge angles between the suction surface 
+            th_suc:     trailing edge angles between the suction surface
                         and the horizontal axis
             x_pre:      pressure surface crest location x
             y_pre:      pressure surface crest location y
@@ -225,7 +225,7 @@ class PARSEC(foilix.foil_generators.parametric_foil.ParametricFoil):
             return False
 
     def is_valid(self):
-        r"""Check that the geometry is valid and corresponds to a 2D section 
+        r"""Check that the geometry is valid and corresponds to a 2D section
         that can actually be built.
 
         Returns
@@ -264,6 +264,10 @@ class PARSEC(foilix.foil_generators.parametric_foil.ParametricFoil):
 
             real_thickness = max_y_coord - min_y_coord
             assert real_thickness > 0.
+            if real_thickness <= 0.:
+                msg = "real_thickness is expected to be strictly positive. " \
+                      "Yet, it is %f" % real_thickness
+                raise ValueError(msg)
 
             if sign_changes_suc > 0:
                 return False

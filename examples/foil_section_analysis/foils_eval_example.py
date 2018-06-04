@@ -4,7 +4,6 @@
 r"""Foils evaluation example"""
 
 import logging
-import os
 
 from corelib.core.files import p_
 
