@@ -2,13 +2,10 @@ View some polars from RBF partial data model to check there are no oscillations 
   Add polar builder to data api code
 *_xtr should never be negative or > 1
 
--> Make executables from the examples/cases to avoid code duplication every time a new case has to be solved
-    On peut faire les optims NURBS et PARSEC en même temps si on modifie le nom des fichiers générés !
-
 Basic doc
 
-pyOpt integration
-  objfunc(x, ncrits, reynolds ....) -> use functools.partial to create an objfunc(x) that is properly configured for the case of interest
+pyOpt integration (cf. examples/pyOpt_integration)
+  Temporary files of optimization should not live in foilix/optimization !
 
 
 Xfoil

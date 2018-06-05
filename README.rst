@@ -19,6 +19,10 @@ Goals:
 
 For some reason, the optimization algorithms run much faster in Python 2. An investigation has yet to be done.
 
+Use the Docker containers to use the best Python version for each *foilix_opt_step<n>_<desc>* optimization step on a case under $HOME (common volume)!
+
+PARSEC and NURBS parameterizations can both be used to optimize the same case
+
 
 Xfoil
 -----

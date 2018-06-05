@@ -4,11 +4,10 @@
 r"""Visualize the optimization results"""
 from __future__ import print_function, division
 
-import time
-import logging
 from os import getcwd, chdir
 from os.path import join, basename, dirname, isfile
 from argparse import ArgumentParser
+import shutil
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -23,7 +22,7 @@ config = read_config(join(getcwd(), "foilix_case.conf"))
 
 
 def nurbs_foil():
-    with open(join(getcwd(), "global_best.data")) as f:
+    with open(join(getcwd(), "global_best_nurbs.data")) as f:
         lines = f.readlines()
 
     ta = float(lines[3])
@@ -42,7 +41,7 @@ def nurbs_foil():
 
 
 def parsec_foil():
-    with open(join(getcwd(), "global_best.data")) as f:
+    with open(join(getcwd(), "global_best_parsec.data")) as f:
         lines = f.readlines()
 
     thickness = float(lines[3])
@@ -72,30 +71,31 @@ def main(parameterization):
     MATPLOTLIBRC = join(dirname(__file__), 'matplotlibrc_defaults')
     matplotlib.rc_context(fname=MATPLOTLIBRC)
 
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s :: %(levelname)6s :: %(module)20s '
-                               ':: %(lineno)3d :: %(message)s')
-    logger = logging.getLogger(__name__)
-
     # read global_best.data to rebuild foil
-    # assert isfile(join(getcwd(), "global_best.data"))
-    if not isfile(join(getcwd(), "global_best.data")):
-        msg = "Cannot find global_best.data in CWD"
-        logger.critical(msg)
-        raise AssertionError(msg)
-
     if parameterization == "nurbs":
+        global_best_data_file = "global_best_nurbs.data"
+        global_best_dat_file = "global_best_nurbs.dat"
+        if not isfile(join(getcwd(), global_best_data_file)):
+            msg = "Cannot find global_best_nurbs.data in CWD"
+            # logger.critical(msg)
+            raise AssertionError(msg)
         foil = nurbs_foil()
     elif parameterization == "parsec":
+        global_best_data_file = "global_best_parsec.data"
+        global_best_dat_file = "global_best_parsec.dat"
+        if not isfile(join(getcwd(), global_best_data_file)):
+            msg = "Cannot find global_best_parsec.data in CWD"
+            # logger.critical(msg)
+            raise AssertionError(msg)
         foil = parsec_foil()
     else:
         raise ValueError("Parameterization should be nurbs or parsec")
 
     print(foil)
 
-    foil.plot_foil("Global best foil")
+    foil.plot_foil("Global best %s foil" % parameterization)
 
-    with open(join(getcwd(), "global_best.dat"), "w") as f:
+    with open(join(getcwd(), global_best_dat_file), "w") as f:
         f.write("GB\n")
         f.write(foil.get_coords_plain())
     # print(foil.get_coords_plain())
@@ -109,7 +109,7 @@ def main(parameterization):
     INITIAL_WORKDIR = getcwd()
 
     # Set the working directory to where the xfoil executable resides
-    logger.info("Changing working directory to : %s" % WORKING_DIRECTORY)
+    print("Changing working directory to : %s" % WORKING_DIRECTORY)
     chdir(WORKING_DIRECTORY)
 
     # Analysis configuration
@@ -126,8 +126,7 @@ def main(parameterization):
     foils_to_analyze = [lines[i].split(",")[0] for i in range(8, 11)]
 
     # put the global best file in foil_data
-    import shutil
-    global_best_dat = join(INITIAL_WORKDIR, "global_best.dat")
+    global_best_dat = join(INITIAL_WORKDIR, global_best_dat_file)
     shutil.copyfile(global_best_dat,
                     join(config["foil_dat_folder"],
                          basename(global_best_dat)))
@@ -223,17 +222,12 @@ def main(parameterization):
     plt.show()
     os.remove(join(config["foil_dat_folder"],
                    basename(global_best_dat)))
+
+    print("Changing working directory back to : %s" % INITIAL_WORKDIR)
     chdir(INITIAL_WORKDIR)
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO,
-                        filename='logs/optimizer_%s.log' %
-                                 time.strftime("%d%b%Y-%H%M%S",
-                                               time.localtime()),
-                        format='%(asctime)s :: %(levelname)6s :: %(module)20s '
-                               ':: %(lineno)3d :: %(message)s')
-
     parser = ArgumentParser(description="Foilix Opt step 3")
     parser.add_argument('-n', '--nurbs',
                         action='store_true',

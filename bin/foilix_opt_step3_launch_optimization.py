@@ -101,8 +101,10 @@ def main(parameterization):
 
     if parameterization == "nurbs":
         constraints, so = optimize_with_pso_nurbs()
+        global_best_data_file = "global_best_nurbs.data"
     elif parameterization == "parsec":
         constraints, so = optimize_with_pso_parsec()
+        global_best_data_file = "global_best_parsec.data"
     else:
         raise ValueError("Parameterization must be nurbs or parsec")
 
@@ -113,7 +115,7 @@ def main(parameterization):
                         omega=-0.2,  # Particle velocity scaling factor
                         phi_p=0.0,  # Scaling factor to search away from the particle’s best known position
                         phi_g=2.8,  # Scaling factor to search away from the swarm’s best known position
-                        save_global_best=join(getcwd(), "global_best.data"))
+                        save_global_best=join(getcwd(), global_best_data_file))
 
     app = wx.App()
     dlg = NewLoggingFrame()
