@@ -56,9 +56,9 @@ class Observable(object):
 
 class Observer(object):
     r"""Abstract base class for observers"""
-    __metaclass__ = abc.ABCMeta
+    # __metaclass__ = abc.ABCMeta
 
-    @abc.abstractmethod
+    # @abc.abstractmethod
     def update(self, message, n, i_par, pts, score, foil_parameterization_type):
         r"""The method Observers must implement in order to be updated
 
