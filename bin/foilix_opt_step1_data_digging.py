@@ -109,9 +109,14 @@ def plot():
     plt.show()
 
 if __name__ == "__main__":
+    import sys
+    if not (sys.version_info[0] >= 3 and sys.version_info[1] >= 6):
+        msg = "foilix data digging requires at least Python 3.6 (uses libra)"
+        raise EnvironmentError(msg)
+
     logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s :: %(levelname)6s :: %(module)20s :: '
-                               '%(lineno)3d :: %(message)s')
+                        format='%(asctime)s :: %(levelname)6s :: %(module)20s '
+                               ':: %(lineno)3d :: %(message)s')
     logger = logging.getLogger(__name__)
 
     dig()
