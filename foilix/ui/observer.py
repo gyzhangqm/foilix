@@ -3,7 +3,7 @@
 
 r"""Observer pattern"""
 
-import abc
+# import abc
 
 
 class Observable(object):

@@ -32,7 +32,7 @@ def pso(func,
         ieqcons=None,
         f_ieqcons=None,
         args=(),
-        kwargs={},
+        kwargs=None,
         swarmsize=100,
         omega=0.5,
         phip=0.5,
@@ -111,6 +111,8 @@ def pso(func,
     """
     if ieqcons is None:
         ieqcons = []
+    if kwargs is None:
+        kwargs = {}
 
     # assert len(lb) == len(ub),
     #                          'Lower- and upper-bounds must be the same length'

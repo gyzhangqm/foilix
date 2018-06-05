@@ -69,13 +69,13 @@ def weight(x, *args):
 
 def stress(x, *args):
     H, d, t = x  # all in inches
-    B, rho, _, P = args
+    B, rho, _, _ = args
     return (P * np.sqrt((B / 2)**2 + H**2)) / (2 * t *np.pi * d * H)
 
 
 def buckling_stress(x, *args):
     H, d, t = x  # all in inches
-    B, rho, E, P = args
+    B, rho, _, P = args
     return (np.pi**2 * E * (d**2 + t**2)) / (8 * ((B / 2)**2 + H**2))
 
 

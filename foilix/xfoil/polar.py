@@ -444,8 +444,8 @@ class PolarMatrix(object):
         accumulator_value = 0
         accumulator_angle = 0
         count = 0
-        for i, rn in enumerate(self._reynolds_numbers):
-            for j, nc in enumerate(self._ncrits):
+        for i, _ in enumerate(self._reynolds_numbers):
+            for j, _ in enumerate(self._ncrits):
                 accumulator_value += self.matrix[i][j].max_lift_to_drag[0]
                 accumulator_angle += self.matrix[i][j].max_lift_to_drag[1]
                 count += 1
