@@ -13,3 +13,7 @@ WORKDIR /opt
 RUN git clone --depth=1 https://github.com/guillaume-florent/foilix
 WORKDIR /opt/foilix
 RUN python setup.py install
+
+# xfoil executable
+RUN apt-get update && apt-get install -y gfortran && rm -rf /var/lib/apt/lists/*
+COPY foilix/xfoil/xfoil /opt/conda/lib/python2.7/site-packages/foilix/xfoil/xfoil

@@ -10,8 +10,6 @@ from os.path import basename, splitext
 import numpy as np
 import scipy.interpolate
 
-from foilix.data_api import get_data_tuple
-
 from foilix.xfoil.xfoil import oper_visc_alpha
 # from foilix.db_deprecated.query import data_from_db
 
@@ -116,6 +114,12 @@ class Polar(object):
         #                                          axis=0)
 
         else:
+            # import here so as to still be able to run the optimization step
+            # under python2 (since data_api import libra that is Python 3 only)
+            # The foilix.data_api import only happens when interpolating from
+            # pre-computed data
+            from foilix.data_api import get_data_tuple
+
             foil_id = splitext(basename(self._filename))[0]
 
             for angle in self.angles_of_attack_spec:
