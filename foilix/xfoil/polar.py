@@ -36,7 +36,7 @@ class Polar(object):
     ----------
     foil_data_folder : str
         Path to the foil data folder (precomputed data)
-    filename : String
+    filename : str or None
         The name of the .dat file containing the airfoil coordinates
     angles_of_attack_spec : list of 3 floats [start, stop, interval]
         The angles of attack at which the foil should be evaluated
@@ -120,16 +120,19 @@ class Polar(object):
             # pre-computed data
             from foilix.data_api import get_data_tuple
 
+            # since we use the pre-computed data, we only need the id,
+            # not the whole filename
             foil_id = splitext(basename(self._filename))[0]
 
             for angle in self.angles_of_attack_spec:
 
-                cl, cd, cdp, cm, top_xtr, bot_xtr = get_data_tuple(self.foil_data_folder,
-                                                                   foil_id,
-                                                                   mach=0,
-                                                                   ncrit=self._ncrit,
-                                                                   reynolds=self._reynolds_number,
-                                                                   aoa=angle)
+                cl, cd, cdp, cm, top_xtr, bot_xtr = \
+                    get_data_tuple(self.foil_data_folder,
+                                   foil_id,
+                                   mach=0,
+                                   ncrit=self._ncrit,
+                                   reynolds=self._reynolds_number,
+                                   aoa=angle)
                 self._data_array = np.append(self._data_array,
                                              [[angle,
                                                cl,
