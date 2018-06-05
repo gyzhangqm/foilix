@@ -17,20 +17,8 @@ Goals:
 - score a 2D foil section by using weighting factors for its main characteristics (L max; L/D max, min drag)
 
 
-The bin folder should be in PATH (either manually by altering bashrc or via a conda install (to be created)
-
-Getting started
----------------
-
-see section_analysis_example.py in examples/foil_section_analysis
-see pso_example.py in examples/optimization to see how to optimize a section
-
-Python
-------
-
-Recommended Python version is 2.7.*
-
 For some reason, the optimization algorithms run much faster in Python 2. An investigation has yet to be done.
+
 
 Xfoil
 -----
